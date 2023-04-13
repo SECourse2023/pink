@@ -13,7 +13,9 @@
         "VisualStudioExptTeam.vscodeintellicode",
         "wix.vscode-import-cost",
         "GitHub.copilot",
-        "oouo-diogo-perdigao.docthis"
+        "GitHub.copilot-labs",
+        "oouo-diogo-perdigao.docthis",
+        "redhat.vscode-yaml"
       ]
     }
   },
