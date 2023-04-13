@@ -1,0 +1,16 @@
+{
+  "name": "@pinkjs/server",
+  "packageManager": "yarn@3.5.0",
+  "license": "AGPL-3.0",
+  "main": "build/index.js",
+  "type": "module",
+  "dependencies": {
+    "fastify": "^4.15.0",
+    "mongodb": "^5.2.0",
+    "nanoid": "^4.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.11",
+    "typescript": "^5.0.4"
+  }
+}

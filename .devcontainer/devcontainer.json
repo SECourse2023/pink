@@ -1,0 +1,26 @@
+{
+  "name": "Pink",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "mongodb.mongodb-vscode",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "VisualStudioExptTeam.intellicode-api-usage-examples",
+        "VisualStudioExptTeam.vscodeintellicode",
+        "wix.vscode-import-cost",
+        "GitHub.copilot",
+        "oouo-diogo-perdigao.docthis"
+      ]
+    }
+  },
+  "postCreateCommand": [
+    "bash",
+    "-i",
+    "-c",
+    "nvm install && nvm use && corepack enable && yarn config set --home enableTelemetry 0 && yarn install"
+  ]
+}
