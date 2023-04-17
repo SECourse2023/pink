@@ -76,4 +76,13 @@ export const userController: FastifyPluginAsyncTypebox = async (server) => {
     // TODO: implement this
     throw server.httpErrors.notImplemented()
   })
+
+  server.get('/profile', async (req) => {
+    const user = await collections.users.findOne({ _id: req.user._id })
+    return {
+      _id: user._id,
+      username: user.username,
+      email: user.email
+    }
+  })
 }
