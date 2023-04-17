@@ -3,7 +3,7 @@ import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
 import { Stack, HStack, VStack } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
 
-function App() {
+function ProfileView() {
   return (
     <VStack>
       <Flex>
@@ -44,4 +44,4 @@ function App() {
   )
 }
 
-export default App
+export default ProfileView
