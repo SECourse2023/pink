@@ -1518,15 +1518,15 @@ __metadata:
   linkType: hard
 
 "@fastify/send@npm:^2.0.0":
-  version: 2.0.1
-  resolution: "@fastify/send@npm:2.0.1"
+  version: 2.1.0
+  resolution: "@fastify/send@npm:2.1.0"
   dependencies:
     "@lukeed/ms": ^2.0.1
     escape-html: ~1.0.3
     fast-decode-uri-component: ^1.0.1
     http-errors: 2.0.0
     mime: ^3.0.0
-  checksum: 184a21b5cd00a3756f5b9e853b0d110074a438e9112f8a27211aa6c3e2c27b4baf0cc9ca157561914b2181f1dab752ec3dd278bd8419f94972e56d5fdfb4c79c
+  checksum: c0eeddd35c53167e41ee7c25ccbb964e5a1e4a17c827da6486db656581f83f162237d6f8104b698a4a136d8ea054f2d028bfa4c7d1c4126db51584680f43e1f1
   languageName: node
   linkType: hard
 
@@ -1546,8 +1546,8 @@ __metadata:
   linkType: hard
 
 "@fastify/static@npm:^6.0.0":
-  version: 6.10.0
-  resolution: "@fastify/static@npm:6.10.0"
+  version: 6.10.1
+  resolution: "@fastify/static@npm:6.10.1"
   dependencies:
     "@fastify/accept-negotiator": ^1.0.0
     "@fastify/send": ^2.0.0
@@ -1556,7 +1556,7 @@ __metadata:
     glob: ^8.0.1
     p-limit: ^3.1.0
     readable-stream: ^4.0.0
-  checksum: 483087ff67f28b89168ba82b15398cfe4aa928b87e391daa51def3c990b1577450cb6faa37e7c02fb3536c71ab1374cf3a3dadd210c94a76006f053f4534dddc
+  checksum: c86a6e8d3b0bb8a8f649e0f6b378024896892b71a6a477352089106f4ad863bdd52f30cfd1853a9fd80f639d10d1a9bf03fc091d73562738e4ddddcc29146c14
   languageName: node
   linkType: hard
 
@@ -1822,9 +1822,9 @@ __metadata:
     "@chakra-ui/react": ^2.5.5
     "@emotion/react": ^11.10.6
     "@emotion/styled": ^11.10.6
-    "@types/node": ^17.0.12
-    "@types/react": ^18.0.22
-    "@types/react-dom": ^18.0.7
+    "@types/node": ^17.0.45
+    "@types/react": ^18.0.35
+    "@types/react-dom": ^18.0.11
     eslint-config-next: latest
     eslint-config-prettier: ^8.3.0
     eslint-plugin-react: 7.28.0
@@ -1944,7 +1944,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^17.0.12":
+"@types/node@npm:^17.0.45":
   version: 17.0.45
   resolution: "@types/node@npm:17.0.45"
   checksum: aa04366b9103b7d6cfd6b2ef64182e0eaa7d4462c3f817618486ea0422984c51fc69fd0d436eae6c9e696ddfdbec9ccaa27a917f7c2e8c75c5d57827fe3d95e8
@@ -1965,7 +1965,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18.0.7":
+"@types/react-dom@npm:^18.0.11":
   version: 18.0.11
   resolution: "@types/react-dom@npm:18.0.11"
   dependencies:
@@ -1974,7 +1974,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react@npm:*, @types/react@npm:^18.0.22":
+"@types/react@npm:*, @types/react@npm:^18.0.35":
   version: 18.0.35
   resolution: "@types/react@npm:18.0.35"
   dependencies:
@@ -2643,9 +2643,9 @@ __metadata:
   linkType: hard
 
 "caniuse-lite@npm:^1.0.30001406":
-  version: 1.0.30001478
-  resolution: "caniuse-lite@npm:1.0.30001478"
-  checksum: 27a370dcb32a6a35e186307aabc570da1cd0fccc849913665e7df6822a87286de99509b163304e0586c23c539a991717fb68ed84b85bbd21b2cb86475ae5ffb2
+  version: 1.0.30001480
+  resolution: "caniuse-lite@npm:1.0.30001480"
+  checksum: c0b40f02f45ee99c73f732a3118028b2ab1544962d473d84f2afcb898a5e3099bd4c45f316ebc466fb1dbda904e86b72695578ca531a0bfa9d6337e7aad1ee2a
   languageName: node
   linkType: hard
 
@@ -3149,7 +3149,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-next@npm:latest":
+eslint-config-next@latest:
   version: 13.3.0
   resolution: "eslint-config-next@npm:13.3.0"
   dependencies:
@@ -3214,14 +3214,14 @@ __metadata:
   linkType: hard
 
 "eslint-module-utils@npm:^2.7.4":
-  version: 2.7.4
-  resolution: "eslint-module-utils@npm:2.7.4"
+  version: 2.8.0
+  resolution: "eslint-module-utils@npm:2.8.0"
   dependencies:
     debug: ^3.2.7
   peerDependenciesMeta:
     eslint:
       optional: true
-  checksum: 5da13645daff145a5c922896b258f8bba560722c3767254e458d894ff5fbb505d6dfd945bffa932a5b0ae06714da2379bd41011c4c20d2d59cc83e23895360f7
+  checksum: 74c6dfea7641ebcfe174be61168541a11a14aa8d72e515f5f09af55cd0d0862686104b0524aa4b8e0ce66418a44aa38a94d2588743db5fd07a6b49ffd16921d2
   languageName: node
   linkType: hard
 
@@ -3345,12 +3345,12 @@ __metadata:
   linkType: hard
 
 "eslint-scope@npm:^7.1.1":
-  version: 7.1.1
-  resolution: "eslint-scope@npm:7.1.1"
+  version: 7.2.0
+  resolution: "eslint-scope@npm:7.2.0"
   dependencies:
     esrecurse: ^4.3.0
     estraverse: ^5.2.0
-  checksum: 9f6e974ab2db641ca8ab13508c405b7b859e72afe9f254e8131ff154d2f40c99ad4545ce326fd9fde3212ff29707102562a4834f1c48617b35d98c71a97fbf3e
+  checksum: 64591a2d8b244ade9c690b59ef238a11d5c721a98bcee9e9f445454f442d03d3e04eda88e95a4daec558220a99fa384309d9faae3d459bd40e7a81b4063980ae
   languageName: node
   linkType: hard
 
@@ -5115,7 +5115,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next@npm:latest":
+next@latest:
   version: 13.3.0
   resolution: "next@npm:13.3.0"
   dependencies:
@@ -5834,7 +5834,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"resolve@npm:^1.19.0":
+"resolve@npm:^1.19.0, resolve@npm:^1.22.1":
   version: 1.22.3
   resolution: "resolve@npm:1.22.3"
   dependencies:
@@ -5844,19 +5844,6 @@ __metadata:
   bin:
     resolve: bin/resolve
   checksum: fb834b81348428cb545ff1b828a72ea28feb5a97c026a1cf40aa1008352c72811ff4d4e71f2035273dc536dcfcae20c13604ba6283c612d70fa0b6e44519c374
-  languageName: node
-  linkType: hard
-
-"resolve@npm:^1.22.1":
-  version: 1.22.2
-  resolution: "resolve@npm:1.22.2"
-  dependencies:
-    is-core-module: ^2.11.0
-    path-parse: ^1.0.7
-    supports-preserve-symlinks-flag: ^1.0.0
-  bin:
-    resolve: bin/resolve
-  checksum: 7e5df75796ebd429445d102d5824482ee7e567f0070b2b45897b29bb4f613dcbc262e0257b8aeedb3089330ccaea0d6a0464df1a77b2992cf331dcda0f4cb549
   languageName: node
   linkType: hard
 
@@ -5873,7 +5860,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"resolve@patch:resolve@^1.19.0#~builtin<compat/resolve>":
+"resolve@patch:resolve@^1.19.0#~builtin<compat/resolve>, resolve@patch:resolve@^1.22.1#~builtin<compat/resolve>":
   version: 1.22.3
   resolution: "resolve@patch:resolve@npm%3A1.22.3#~builtin<compat/resolve>::version=1.22.3&hash=c3c19d"
   dependencies:
@@ -5883,19 +5870,6 @@ __metadata:
   bin:
     resolve: bin/resolve
   checksum: ad59734723b596d0891321c951592ed9015a77ce84907f89c9d9307dd0c06e11a67906a3e628c4cae143d3e44898603478af0ddeb2bba3f229a9373efe342665
-  languageName: node
-  linkType: hard
-
-"resolve@patch:resolve@^1.22.1#~builtin<compat/resolve>":
-  version: 1.22.2
-  resolution: "resolve@patch:resolve@npm%3A1.22.2#~builtin<compat/resolve>::version=1.22.2&hash=c3c19d"
-  dependencies:
-    is-core-module: ^2.11.0
-    path-parse: ^1.0.7
-    supports-preserve-symlinks-flag: ^1.0.0
-  bin:
-    resolve: bin/resolve
-  checksum: 66cc788f13b8398de18eb4abb3aed90435c84bb8935953feafcf7231ba4cd191b2c10b4a87b1e9681afc34fb138c705f91f7330ff90bfa36f457e5584076a2b8
   languageName: node
   linkType: hard
 
