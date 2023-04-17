@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import { Flex, Box, Input, Button } from '@chakra-ui/react';
+import React, { useState } from 'react'
+import { Flex, Box, Input, Button } from '@chakra-ui/react'
 
 interface QueryViewProps {
-  onSubmit: (fromDoid: string, toDoid: string) => void;
+  onSubmit: (fromDoid: string, toDoid: string) => void
 }
 
 const QueryView: React.FC<QueryViewProps> = ({ onSubmit }) => {
-  const [fromDoid, setFromDoid] = useState('');
-  const [toDoid, setToDoid] = useState('');
+  const [fromDoid, setFromDoid] = useState('')
+  const [toDoid, setToDoid] = useState('')
 
   const handleSubmit = () => {
-    onSubmit(fromDoid, toDoid);
-  };
+    onSubmit(fromDoid, toDoid)
+  }
 
   return (
     <Flex
@@ -58,7 +58,7 @@ const QueryView: React.FC<QueryViewProps> = ({ onSubmit }) => {
         </Box>
       </Box>
     </Flex>
-  );
-};
+  )
+}
 
-export default QueryView;
+export default QueryView
