@@ -1,5 +1,8 @@
-import { Flex, Heading, Spacer } from '@chakra-ui/react'
+import React from 'react'
+import DashboardView from './DashBoardView'
 
-export default function Index() {
-  return <Heading>TODO</Heading>
+const Home: React.FC = () => {
+  return <DashboardView />
 }
+
+export default Home

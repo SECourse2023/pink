@@ -1,0 +1,10 @@
+.dashboardView {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: Arial, sans-serif;
+}
+
+.dashboardViewTitle {
+  margin-bottom: 1rem;
+}
