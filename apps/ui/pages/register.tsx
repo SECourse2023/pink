@@ -14,10 +14,11 @@ import ky from 'ky'
 
 type FormData = {
   username: string
+  email: string
   password: string
 }
 
-export default function Login() {
+export default function Register() {
   const {
     handleSubmit,
     register,
@@ -27,22 +28,18 @@ export default function Login() {
 
   const router = useRouter()
 
-  const onSubmit = async ({ username, password }: FormData) => {
+  const onSubmit = async ({ username, email, password }: FormData) => {
     const response = await ky
-      .post('/api/user/login', { json: { username, password } })
-      .json<{ token: string }>()
+      .post('/api/user/register', { json: { username, email, password } })
+      .json<{ _id: string }>()
       .catch((err) => {
-        if (err.name === 'HTTPError' && err.response.status === 401) {
-          setError('password', {
-            type: 'manual',
-            message: '用户名或密码错误'
-          })
+        if (err.name === 'HTTPError') {
+          console.log(err)
         }
       })
     if (!response) return
 
-    localStorage.setItem('token', response.token)
-    router.push('/')
+    router.push('/login')
   }
 
   return (
@@ -60,6 +57,21 @@ export default function Login() {
             <FormErrorMessage>{errors.username && errors.username.message}</FormErrorMessage>
           </FormControl>
           <FormControl mt={4} isInvalid={errors.password !== undefined}>
+            <FormLabel>邮箱</FormLabel>
+            <Input
+              type="email"
+              placeholder="输入邮箱"
+              {...register('email', {
+                required: 'This is required',
+                pattern: {
+                  value: /^\S+@\S+$/i,
+                  message: '邮箱格式不正确'
+                }
+              })}
+            />
+            <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
+          </FormControl>
+          <FormControl mt={4} isInvalid={errors.password !== undefined}>
             <FormLabel>密码</FormLabel>
             <Input
               type="password"
@@ -72,9 +84,6 @@ export default function Login() {
           </FormControl>
           <HStack w="full" spacing={4} mt={8}>
             <Button colorScheme="pink" isLoading={isSubmitting} type="submit">
-              登录
-            </Button>
-            <Button colorScheme="pink" variant="outline" onClick={() => router.push('/register')}>
               注册
             </Button>
           </HStack>
