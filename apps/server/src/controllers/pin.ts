@@ -15,7 +15,6 @@ export const pinController: FastifyPluginAsyncTypebox = async (server) => {
       schema: {
         body: Type.Partial(
           Type.Object({
-            _id: Type.String(),
             type: Type.String(),
             metadata: Type.Unknown()
           })
@@ -23,19 +22,17 @@ export const pinController: FastifyPluginAsyncTypebox = async (server) => {
         response: {
           200: Type.String()
         }
-      },
-      config: {
-        bypassAuth: true
       }
     },
     async (req) => {
+      const _id = nanoid()
       await collections.pins.insertOne({
-        _id: req.body._id,
+        _id,
         type: req.body.type,
         owner: req.user._id,
         metadata: req.body.metadata
       })
-      return req.body._id
+      return _id
     }
   )
 
@@ -46,9 +43,6 @@ export const pinController: FastifyPluginAsyncTypebox = async (server) => {
         response: {
           200: Type.Array(Type.Unknown())
         }
-      },
-      config: {
-        bypassAuth: true
       }
     },
     async (req) => {
@@ -71,9 +65,6 @@ export const pinController: FastifyPluginAsyncTypebox = async (server) => {
         response: {
           200: Type.Unknown()
         }
-      },
-      config: {
-        bypassAuth: true
       }
     },
     async (req) => {
@@ -100,9 +91,6 @@ export const pinController: FastifyPluginAsyncTypebox = async (server) => {
         response: {
           200: Type.Number()
         }
-      },
-      config: {
-        bypassAuth: true
       }
     },
     async (req) => {
@@ -127,9 +115,6 @@ export const pinController: FastifyPluginAsyncTypebox = async (server) => {
         response: {
           200: Type.Number()
         }
-      },
-      config: {
-        bypassAuth: true
       }
     },
     async (req) => {
