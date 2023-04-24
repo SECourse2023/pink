@@ -7,9 +7,6 @@ export const linkController: FastifyPluginAsyncTypebox = async (server) => {
   server.post(
     '/create',
     {
-      config: {
-        bypassAuth: true
-      },
       schema: {
         body: Type.Object({
           from: Type.String(),
@@ -41,9 +38,6 @@ export const linkController: FastifyPluginAsyncTypebox = async (server) => {
   server.post(
     '/list',
     {
-      config: {
-        bypassAuth: true
-      },
       schema: {
         body: Type.Partial(
           Type.Object({
@@ -67,9 +61,6 @@ export const linkController: FastifyPluginAsyncTypebox = async (server) => {
   server.post(
     '/get',
     {
-      config: {
-        bypassAuth: true
-      },
       schema: {
         body: Type.Object({
           _id: Type.String()
@@ -88,9 +79,6 @@ export const linkController: FastifyPluginAsyncTypebox = async (server) => {
   server.post(
     '/update',
     {
-      config: {
-        bypassAuth: true
-      },
       schema: {
         body: Type.Object({
           _id: Type.String(),
@@ -123,9 +111,6 @@ export const linkController: FastifyPluginAsyncTypebox = async (server) => {
   server.post(
     '/delete',
     {
-      config: {
-        bypassAuth: true
-      },
       schema: {
         body: Type.Object({
           _id: Type.String()
