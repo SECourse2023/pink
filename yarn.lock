@@ -2153,20 +2153,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@zag-js/element-size@npm:0.3.2":
-  version: 0.3.2
-  resolution: "@zag-js/element-size@npm:0.3.2"
-  checksum: ee76f0b49e13e55f6adfe5b2e4d2c7b4207a9bc3d453497e90f206f8579e9f4f8bfc038c3f6eec42dac09476d767ddddb73e7697a26e96852249652adb0a35e0
-  languageName: node
-  linkType: hard
-
-"@zag-js/focus-visible@npm:0.2.2":
-  version: 0.2.2
-  resolution: "@zag-js/focus-visible@npm:0.2.2"
-  checksum: 4cfb41479d82ced942476acfe17dd19f0c40bcceb28733ab8f716a53b893790b20e279461345ee03a7ac1273452f6a33882120b6b55d4e220179956fdd7ec4be
-  languageName: node
-  linkType: hard
-
 "abbrev@npm:1, abbrev@npm:^1.0.0":
   version: 1.1.1
   resolution: "abbrev@npm:1.1.1"
