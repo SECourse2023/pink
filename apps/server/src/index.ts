@@ -13,7 +13,21 @@ await server.register(fastifySwagger, {
       title: 'Pink',
       description: 'Pink',
       version: 'latest'
-    }
+    },
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT'
+        }
+      }
+    },
+    security: [
+      {
+        bearerAuth: []
+      }
+    ]
   }
 })
 await server.register(fastifySwaggerUi, {
