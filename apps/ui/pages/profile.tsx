@@ -1,7 +1,8 @@
 import { Flex, Avatar, Text, Wrap, WrapItem, Heading, Center, Spacer } from '@chakra-ui/react'
 import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
 import { Stack, HStack, VStack } from '@chakra-ui/react'
-import type { AppProps } from 'next/app'
+import PinListView from '../components/PinListView'
+import pinsData from '../data/pinsData'
 
 function ProfileView() {
   return (
@@ -21,24 +22,17 @@ function ProfileView() {
         </Heading>
       </Flex>
       <HStack>
-        <Card>
-          <CardHeader>
-            <Text>My Pins</Text>
-            <ul>
-              <li>Pin 1</li>
-              <li>Pin 2</li>
-            </ul>
-          </CardHeader>
-        </Card>
-        <Card>
-          <CardHeader>
-            <Text>My Links</Text>
-            <ul>
-              <li>Link 1</li>
-              <li>Link 2</li>
-            </ul>
-          </CardHeader>
-        </Card>
+        <VStack>
+          <Heading as="h2" size="md" mx="10" my="10">
+            My Pins
+          </Heading>
+          <PinListView pins={pinsData} />
+        </VStack>
+        <VStack>
+          <Heading as="h2" size="md" mx="10" my="10">
+            My Links
+          </Heading>
+        </VStack>
       </HStack>
     </VStack>
   )
