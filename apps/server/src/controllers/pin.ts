@@ -1,7 +1,7 @@
 import { Type } from '@fastify/type-provider-typebox'
 import { FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox'
-import { nanoid } from 'nanoid'
 import { collections } from '../db/index.js'
+import { registerDOID } from '../gateway/index.js'
 
 export const pinController: FastifyPluginAsyncTypebox = async (server) => {
   //
@@ -25,7 +25,7 @@ export const pinController: FastifyPluginAsyncTypebox = async (server) => {
       }
     },
     async (req) => {
-      const _id = nanoid()
+      const _id = await registerDOID(req.body)
       await collections.pins.insertOne({
         _id,
         type: req.body.type,
