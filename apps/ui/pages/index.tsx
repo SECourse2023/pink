@@ -1,5 +1,5 @@
 import React from 'react'
-import DashboardView from './DashBoardView'
+import DashboardView from './dashboard'
 
 const Home: React.FC = () => {
   return <DashboardView />
