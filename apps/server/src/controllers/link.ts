@@ -1,7 +1,6 @@
 import { FastifyPluginAsyncTypebox, Type } from '@fastify/type-provider-typebox'
 import { collections } from '../db/index.js'
 import { nanoid } from 'nanoid'
-import { assert } from 'console'
 
 export const linkController: FastifyPluginAsyncTypebox = async (server) => {
   server.post(
@@ -23,6 +22,7 @@ export const linkController: FastifyPluginAsyncTypebox = async (server) => {
     },
     async (req) => {
       const _id = nanoid()
+      // TODO: permission control
       const { from, to, type, metadata } = req.body
       await collections.links.insertOne({
         _id,
@@ -35,11 +35,11 @@ export const linkController: FastifyPluginAsyncTypebox = async (server) => {
     }
   )
 
-  server.post(
+  server.get(
     '/list',
     {
       schema: {
-        body: Type.Partial(
+        querystring: Type.Partial(
           Type.Object({
             from: Type.String(),
             to: Type.String()
@@ -51,19 +51,19 @@ export const linkController: FastifyPluginAsyncTypebox = async (server) => {
       }
     },
     async (req) => {
-      const { from, to } = req.body
+      const { from, to } = req.query
       if (!from && !to) throw server.httpErrors.badRequest()
       const links = await collections.links.find({ from, to }).toArray()
       return links
     }
   )
 
-  server.post(
-    '/get',
+  server.get(
+    '/:id',
     {
       schema: {
-        body: Type.Object({
-          _id: Type.String()
+        params: Type.Object({
+          id: Type.String()
         }),
         response: {
           200: Type.Unknown()
@@ -71,49 +71,47 @@ export const linkController: FastifyPluginAsyncTypebox = async (server) => {
       }
     },
     async (req) => {
-      const link = await collections.links.findOne({ _id: req.body._id })
+      const link = await collections.links.findOne({ _id: req.params.id })
       return link
     }
   )
 
-  server.post(
-    '/update',
+  server.put(
+    '/:id',
     {
       schema: {
-        body: Type.Object({
-          _id: Type.String(),
-          set: Type.Partial(
-            Type.Object({
+        params: Type.Object({
+          id: Type.String()
+        }),
+        body: Type.Partial(
+          Type.Object(
+            {
               from: Type.String(),
               to: Type.String(),
               type: Type.String(),
               metadata: Type.Unknown()
-            }),
+            },
             { additionalProperties: false }
           )
-        }),
+        ),
         response: {
           200: Type.Number()
         }
       }
     },
     async (req) => {
-      const resp = await collections.links.updateOne(
-        { _id: req.body._id },
-        {
-          $set: req.body.set
-        }
-      )
-      return resp.modifiedCount
+      // TODO: permission control
+      await collections.links.updateOne({ _id: req.params.id }, { $set: req.body })
+      return 0
     }
   )
 
-  server.post(
-    '/delete',
+  server.delete(
+    '/:id',
     {
       schema: {
-        body: Type.Object({
-          _id: Type.String()
+        params: Type.Object({
+          id: Type.String()
         }),
         response: {
           200: Type.Number()
@@ -121,7 +119,8 @@ export const linkController: FastifyPluginAsyncTypebox = async (server) => {
       }
     },
     async (req) => {
-      const resp = await collections.links.deleteOne({ _id: req.body._id })
+      // TODO: permission control
+      const resp = await collections.links.deleteOne({ _id: req.params.id })
       return resp.deletedCount
     }
   )

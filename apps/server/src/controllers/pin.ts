@@ -47,70 +47,67 @@ export const pinController: FastifyPluginAsyncTypebox = async (server) => {
     },
     async (req) => {
       const owner = req.user._id
-      if (!owner) throw server.httpErrors.badRequest()
       const pins = await collections.pins.find({ owner }).toArray()
       return pins
     }
   )
 
-  server.post(
-    '/get',
+  server.get(
+    '/:id',
     {
       schema: {
-        body: Type.Partial(
-          Type.Object({
-            _id: Type.String()
-          })
-        ),
+        params: Type.Object({
+          id: Type.String()
+        }),
         response: {
           200: Type.Unknown()
         }
       }
     },
     async (req) => {
-      const _id = req.body._id
-      if (!_id) throw server.httpErrors.badRequest()
+      const _id = req.params.id
+      if (!_id) throw server.httpErrors.notFound()
       const pin = await collections.pins.findOne({ _id })
       return pin
     }
   )
 
-  server.post(
-    '/update',
+  server.put(
+    '/:id',
     {
       schema: {
-        body: Type.Object({
-          _id: Type.String(),
-          set: Type.Partial(
-            Type.Object({
+        params: Type.Object({
+          id: Type.String()
+        }),
+        body: Type.Partial(
+          Type.Object(
+            {
               type: Type.String(),
               metadata: Type.Unknown()
-            })
+            },
+            { additionalProperties: false }
           )
-        }),
+        ),
         response: {
           200: Type.Number()
         }
       }
     },
     async (req) => {
-      if (!req.body._id) throw server.httpErrors.badRequest()
-      const pin = await collections.pins.findOne({ id: req.body._id })
-      if (pin.owner != req.user._id) throw server.httpErrors.badRequest()
-      const matched_cnt = (
-        await collections.pins.updateOne({ _id: req.body._id }, { $set: req.body.set })
-      ).matchedCount
-
-      return matched_cnt
+      const _id = req.params.id
+      const pin = await collections.pins.findOne({ _id })
+      if (pin.owner != req.user._id) throw server.httpErrors.forbidden()
+      await collections.pins.updateOne({ _id }, { $set: req.body })
+      return 0
     }
   )
 
-  server.post(
-    '/delete',
+  server.delete(
+    '/:id',
     {
       schema: {
-        body: Type.Object({
-          _id: Type.String()
+        params: Type.Object({
+          id: Type.String()
         }),
         response: {
           200: Type.Number()
@@ -118,12 +115,11 @@ export const pinController: FastifyPluginAsyncTypebox = async (server) => {
       }
     },
     async (req) => {
-      if (!req.body._id) throw server.httpErrors.badRequest()
-      const pin = await collections.pins.findOne({ id: req.body._id })
-      if (pin.owner != req.user._id) throw server.httpErrors.badRequest()
-      const deleted_cnt = (await collections.pins.deleteOne({ _id: req.body._id })).deletedCount
-
-      return deleted_cnt
+      const _id = req.params.id
+      const pin = await collections.pins.findOne({ _id })
+      if (pin.owner != req.user._id) throw server.httpErrors.forbidden()
+      await collections.pins.deleteOne({ _id })
+      return 0
     }
   )
 }
