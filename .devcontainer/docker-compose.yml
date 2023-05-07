@@ -16,6 +16,10 @@ services:
     volumes:
       - mongodb-data:/data/db
 
+  gateway:
+    image: ghcr.io/secourse2023/gateway:latest
+    env_file: gateway.env
+
   # redis:
   #   image: redis:latest
   #   restart: unless-stopped
