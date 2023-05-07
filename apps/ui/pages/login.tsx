@@ -7,10 +7,11 @@ import {
   Input,
   HStack
 } from '@chakra-ui/react'
-import React from 'react'
+import React, { useContext } from 'react'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
-import ky from 'ky'
+import { AuthContext } from '../contexts/auth'
+import { http } from '../utils/ky'
 
 type FormData = {
   username: string
@@ -27,8 +28,12 @@ export default function Login() {
 
   const router = useRouter()
 
+  const [authToken, setAuthToken] = useContext(AuthContext)
+
+  if (authToken) router.replace('/')
+
   const onSubmit = async ({ username, password }: FormData) => {
-    const response = await ky
+    const response = await http
       .post('/api/user/login', { json: { username, password } })
       .json<{ token: string }>()
       .catch((err) => {
@@ -41,7 +46,7 @@ export default function Login() {
       })
     if (!response) return
 
-    localStorage.setItem('token', response.token)
+    setAuthToken(response.token)
     router.push('/')
   }
 
