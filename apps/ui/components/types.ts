@@ -9,8 +9,10 @@ export interface Link {
 }
 
 export interface User {
-  name: string
-  avatar: string | null
-  pins: Pin[] | null
-  links: Link[] | null
+  id: number
+  username: string
+  email: string
+  avatar: string | undefined
+  pins: Pin[]
+  links: Link[]
 }
