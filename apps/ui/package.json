@@ -14,9 +14,11 @@
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "framer-motion": "^10.12.2",
+    "ky": "^0.33.3",
     "next": "latest",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.43.9"
   },
   "devDependencies": {
     "@types/node": "^17.0.45",

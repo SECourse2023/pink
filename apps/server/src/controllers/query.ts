@@ -40,4 +40,17 @@ export const queryController: FastifyPluginAsyncTypebox = async (server) => {
       return links
     }
   )
+
+  server.post(
+    '/getAllLinks',
+    {
+      config: {
+        bypassAuth: true
+      }
+    },
+    async () => {
+      const links = await collections.links.find().toArray()
+      return links
+    }
+  )
 }
