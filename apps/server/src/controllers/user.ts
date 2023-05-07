@@ -72,10 +72,27 @@ export const userController: FastifyPluginAsyncTypebox = async (server) => {
     }
   )
 
-  server.post('/authorize', async (req) => {
-    // TODO: implement this
-    throw server.httpErrors.notImplemented()
-  })
+  server.post(
+    '/authorize',
+    {
+      schema: {
+        body: Type.Object({
+          response_type: Type.String(),
+          client_id: Type.String(),
+          redirect_uri: Type.String(),
+          scope: Type.String(),
+          state: Type.String(),
+          nonce: Type.String()
+        })
+      }
+    },
+    async (req) => {
+      const user = await collections.users.findOne({ _id: req.user._id })
+      const idToken = server.jwt.sign(user)
+      const accessToken = server.jwt.sign({ _id: user._id })
+      return { idToken, accessToken }
+    }
+  )
 
   server.get('/profile', async (req) => {
     const user = await collections.users.findOne({ _id: req.user._id })
