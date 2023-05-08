@@ -8,7 +8,7 @@ const DashBoardView: React.FC = () => {
   const [pins, setPins] = useState<any[]>([])
   const [authToken, setAuthToken] = useContext(AuthContext)
   useEffect(() => {
-    if(authToken) {
+    if (authToken) {
       http
         .get('/api/pin/list')
         .json()
