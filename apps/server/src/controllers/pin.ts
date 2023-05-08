@@ -2,13 +2,9 @@ import { Type } from '@fastify/type-provider-typebox'
 import { FastifyPluginAsyncTypebox } from '@fastify/type-provider-typebox'
 import { collections } from '../db/index.js'
 import { registerDOID } from '../gateway/index.js'
+import { metadataSchema, pinSchema } from '../schemas/index.js'
 
 export const pinController: FastifyPluginAsyncTypebox = async (server) => {
-  //
-  // DO: id, doid, type, metadata, owner
-  // metadata: {des:'', }
-  // type: String
-
   server.post(
     '/create',
     {
@@ -16,7 +12,7 @@ export const pinController: FastifyPluginAsyncTypebox = async (server) => {
         body: Type.Partial(
           Type.Object({
             type: Type.String(),
-            metadata: Type.Unknown()
+            metadata: metadataSchema
           })
         ),
         response: {
@@ -45,7 +41,7 @@ export const pinController: FastifyPluginAsyncTypebox = async (server) => {
     {
       schema: {
         response: {
-          200: Type.Array(Type.Unknown())
+          200: Type.Array(pinSchema)
         }
       }
     },
@@ -64,7 +60,7 @@ export const pinController: FastifyPluginAsyncTypebox = async (server) => {
           id: Type.String()
         }),
         response: {
-          200: Type.Unknown()
+          200: pinSchema
         }
       }
     },
@@ -83,15 +79,9 @@ export const pinController: FastifyPluginAsyncTypebox = async (server) => {
         params: Type.Object({
           id: Type.String()
         }),
-        body: Type.Partial(
-          Type.Object(
-            {
-              type: Type.String(),
-              metadata: Type.Unknown()
-            },
-            { additionalProperties: false }
-          )
-        ),
+        body: Type.Object({
+          metadata: metadataSchema
+        }),
         response: {
           200: Type.Number()
         }
@@ -101,7 +91,14 @@ export const pinController: FastifyPluginAsyncTypebox = async (server) => {
       const _id = req.params.id
       const pin = await collections.pins.findOne({ _id })
       if (pin.owner != req.user._id) throw server.httpErrors.forbidden()
-      await collections.pins.updateOne({ _id }, { $set: req.body })
+      await collections.pins.updateOne(
+        { _id },
+        {
+          $set: {
+            metadata: req.body.metadata
+          }
+        }
+      )
       return 0
     }
   )

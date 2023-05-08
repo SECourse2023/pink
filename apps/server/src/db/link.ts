@@ -31,7 +31,7 @@ export interface ILink {
   /**
    * The link's metadata
    */
-  metadata: unknown
+  metadata: Record<string, unknown>
 }
 
 export const linkCollection = database.collection<ILink>('links')

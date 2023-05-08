@@ -20,7 +20,7 @@ export interface IPin {
   /**
    * The Pin's metadata
    */
-  metadata: unknown
+  metadata: Record<string, unknown>
 }
 
 export const pinCollection = database.collection<IPin>('pins')

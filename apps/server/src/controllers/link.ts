@@ -1,6 +1,7 @@
 import { FastifyPluginAsyncTypebox, Type } from '@fastify/type-provider-typebox'
 import { collections } from '../db/index.js'
 import { registerDOID } from '../gateway/index.js'
+import { linkSchema, metadataSchema } from '../schemas/index.js'
 
 export const linkController: FastifyPluginAsyncTypebox = async (server) => {
   server.post(
@@ -11,7 +12,7 @@ export const linkController: FastifyPluginAsyncTypebox = async (server) => {
           from: Type.String(),
           to: Type.String(),
           type: Type.String(),
-          metadata: Type.Unknown()
+          metadata: metadataSchema
         }),
         response: {
           200: Type.Object({
@@ -56,7 +57,7 @@ export const linkController: FastifyPluginAsyncTypebox = async (server) => {
           })
         ),
         response: {
-          200: Type.Array(Type.Unknown())
+          200: Type.Array(linkSchema)
         }
       }
     },
@@ -76,7 +77,7 @@ export const linkController: FastifyPluginAsyncTypebox = async (server) => {
           id: Type.String()
         }),
         response: {
-          200: Type.Unknown()
+          200: linkSchema
         }
       }
     },
@@ -93,25 +94,28 @@ export const linkController: FastifyPluginAsyncTypebox = async (server) => {
         params: Type.Object({
           id: Type.String()
         }),
-        body: Type.Partial(
-          Type.Object(
-            {
-              from: Type.String(),
-              to: Type.String(),
-              type: Type.String(),
-              metadata: Type.Unknown()
-            },
-            { additionalProperties: false }
-          )
-        ),
+        body: Type.Object({
+          metadata: metadataSchema
+        }),
         response: {
           200: Type.Number()
         }
       }
     },
     async (req) => {
-      // TODO: permission control
-      await collections.links.updateOne({ _id: req.params.id }, { $set: req.body })
+      const link = await collections.links.findOne({ _id: req.params.id })
+      if (!link) throw server.httpErrors.notFound()
+      const fromPin = await collections.pins.findOne({ _id: link.from })
+      if (!fromPin) throw server.httpErrors.internalServerError()
+      if (fromPin.owner !== req.user._id) throw server.httpErrors.forbidden()
+      await collections.links.updateOne(
+        { _id: req.params.id },
+        {
+          $set: {
+            metadata: req.body.metadata
+          }
+        }
+      )
       return 0
     }
   )
@@ -129,7 +133,11 @@ export const linkController: FastifyPluginAsyncTypebox = async (server) => {
       }
     },
     async (req) => {
-      // TODO: permission control
+      const link = await collections.links.findOne({ _id: req.params.id })
+      if (!link) throw server.httpErrors.notFound()
+      const fromPin = await collections.pins.findOne({ _id: link.from })
+      if (!fromPin) throw server.httpErrors.internalServerError()
+      if (fromPin.owner !== req.user._id) throw server.httpErrors.forbidden()
       const resp = await collections.links.deleteOne({ _id: req.params.id })
       return resp.deletedCount
     }
