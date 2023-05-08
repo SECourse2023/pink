@@ -1586,14 +1586,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fastify/type-provider-typebox@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "@fastify/type-provider-typebox@npm:3.0.0"
-  dependencies:
-    "@sinclair/typebox": ^0.26.4
+"@fastify/type-provider-typebox@npm:^3.2.0":
+  version: 3.2.0
+  resolution: "@fastify/type-provider-typebox@npm:3.2.0"
   peerDependencies:
-    fastify: ^4.0.0
-  checksum: 422a545a7c3d01f20c8ee54c1a459dd105c018444fa8c85accd37bad3fa1d022079d6a495d9db7c9a7cb19541a832ef972ab3f7f9eec862a6e0e446d03fbe282
+    "@sinclair/typebox": ^0.28.0
+  checksum: 37815fa01eb28863a997a319728d977b28e9dd4d0207d2aff550ee10aaeab3c3a367e74ccc32a7fb3fb787a9d30a2c7e6e8aabd9c674845028b89d1a98337ed0
   languageName: node
   linkType: hard
 
@@ -1801,7 +1799,8 @@ __metadata:
     "@fastify/static": ^6.10.1
     "@fastify/swagger": ^8.3.1
     "@fastify/swagger-ui": ^1.8.0
-    "@fastify/type-provider-typebox": ^3.0.0
+    "@fastify/type-provider-typebox": ^3.2.0
+    "@sinclair/typebox": ^0.28.9
     "@types/bcrypt": ^5.0.0
     "@types/node": ^18.15.11
     "@typescript-eslint/eslint-plugin": ^5.58.0
@@ -1880,10 +1879,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sinclair/typebox@npm:^0.26.4":
-  version: 0.26.8
-  resolution: "@sinclair/typebox@npm:0.26.8"
-  checksum: cbe390c46284fdbf864d152f53a22cbaa37d13c227ca722d8f74ad415071596cb5251222cf77f904113ef848feca37f61ccd9fd94e89e9a3db6ded69d46decd8
+"@sinclair/typebox@npm:^0.28.9":
+  version: 0.28.9
+  resolution: "@sinclair/typebox@npm:0.28.9"
+  checksum: a4281fe4a840d125406b0a265cd56048313b8293b583780d448b7e9da2d770d6c632dba942abf3f5f39cbb48982d162270d93371956fd3ef1987259cac98c8a2
   languageName: node
   linkType: hard
 
