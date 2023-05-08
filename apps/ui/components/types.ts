@@ -1,7 +1,7 @@
 export interface Pin {
-  id: number
-  title: string
-  description: string
+  _id: string
+  type: string
+  metadata: Record<string, unknown>
 }
 
 export interface Link {
