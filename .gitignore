@@ -17,3 +17,5 @@ build
 
 # misc
 .DS_Store
+
+apps/server/public

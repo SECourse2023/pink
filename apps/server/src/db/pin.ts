@@ -24,4 +24,3 @@ export interface IPin {
 }
 
 export const pinCollection = database.collection<IPin>('pins')
-await pinCollection.createIndex({ doid: 1 }, { unique: true })
