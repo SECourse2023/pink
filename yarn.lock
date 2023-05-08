@@ -1545,7 +1545,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fastify/static@npm:^6.0.0":
+"@fastify/static@npm:^6.0.0, @fastify/static@npm:^6.10.1":
   version: 6.10.1
   resolution: "@fastify/static@npm:6.10.1"
   dependencies:
@@ -1798,6 +1798,7 @@ __metadata:
   dependencies:
     "@fastify/jwt": ^6.7.1
     "@fastify/sensible": ^5.2.0
+    "@fastify/static": ^6.10.1
     "@fastify/swagger": ^8.3.1
     "@fastify/swagger-ui": ^1.8.0
     "@fastify/type-provider-typebox": ^3.0.0
