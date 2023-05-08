@@ -13,7 +13,8 @@ const server = fastify({
   logger
 })
 await server.register(fastifyStatic, {
-  root: join(__dirname, '..', 'public')
+  root: join(__dirname, '..', 'public'),
+  extensions: ['html']
 })
 await server.register(fastifySwagger, {
   openapi: {
