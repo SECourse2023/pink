@@ -3,7 +3,7 @@ FROM node:18-alpine
 RUN mkdir -p /app
 COPY apps/server /app
 WORKDIR /app
-RUN corepack yarn install --frozen-lockfile
+RUN corepack yarn install
 COPY apps/ui/out /app/public
 
 EXPOSE 8848
