@@ -36,7 +36,7 @@ export const queryController: FastifyPluginAsyncTypebox = async (server) => {
     async (req) => {
       const { from, to } = req.body
       if (!from && !to) throw server.httpErrors.badRequest()
-      const links = await collections.links.find({ from, to }).toArray()
+      const links = await collections.links.find(req.body).toArray()
       return links
     }
   )
