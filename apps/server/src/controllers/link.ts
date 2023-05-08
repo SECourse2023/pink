@@ -1,6 +1,6 @@
 import { FastifyPluginAsyncTypebox, Type } from '@fastify/type-provider-typebox'
 import { collections } from '../db/index.js'
-import { nanoid } from 'nanoid'
+import { registerDOID } from '../gateway/index.js'
 
 export const linkController: FastifyPluginAsyncTypebox = async (server) => {
   server.post(
@@ -21,9 +21,19 @@ export const linkController: FastifyPluginAsyncTypebox = async (server) => {
       }
     },
     async (req) => {
-      const _id = nanoid()
-      // TODO: permission control
       const { from, to, type, metadata } = req.body
+      const fromPin = await collections.pins.findOne({
+        _id: from
+      })
+      if (!fromPin) throw server.httpErrors.badRequest()
+      if (fromPin.owner !== req.user._id) throw server.httpErrors.forbidden()
+      const _id = await registerDOID({
+        role: 'link',
+        type,
+        from,
+        to,
+        metadata: Buffer.from(JSON.stringify(metadata)).toString('base64url')
+      })
       await collections.links.insertOne({
         _id,
         from,
