@@ -36,7 +36,7 @@ jobs:
       - name: Install dependencies
         run: corepack yarn
       - name: Build ui
-        run: corepack yarn workspace @pinkjs/ui build
+        run: corepack yarn workspace @pinkjs/ui build && corepack yarn workspace @pinkjs/ui export
       - name: Build server
         run: corepack yarn workspace @pinkjs/server build
       - name: Log in to the Container registry
