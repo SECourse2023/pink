@@ -10,7 +10,7 @@ const DashBoardView: React.FC = () => {
       .get('/api/pin/list')
       .json()
       .then((data) => setPins(data as any))
-  })
+  }, [])
   return (
     <Flex>
       <Box width="2/7" backgroundColor="white">

@@ -27,7 +27,7 @@ function ProfileView() {
       .get('/api/user/profile')
       .json()
       .then((data) => setProfile(data))
-  })
+  }, [])
   function logout() {
     setAuthToken('')
     localStorage.setItem('token', '')
