@@ -25,7 +25,10 @@ export const pinController: FastifyPluginAsyncTypebox = async (server) => {
       }
     },
     async (req) => {
-      const _id = await registerDOID(req.body)
+      const _id = await registerDOID({
+        type: req.body.type,
+        metadata: JSON.stringify(req.body.metadata)
+      })
       await collections.pins.insertOne({
         _id,
         type: req.body.type,
