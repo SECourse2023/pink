@@ -30,6 +30,7 @@ function ProfileView() {
   })
   function logout() {
     setAuthToken('')
+    localStorage.setItem('token', '')
     router.push('/')
   }
   return (
