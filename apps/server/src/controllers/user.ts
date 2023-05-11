@@ -38,6 +38,42 @@ export const userController: FastifyPluginAsyncTypebox = async (server) => {
   )
 
   server.post(
+    '/edit',
+    {
+      schema: {
+        body: Type.Partial(
+          Type.Object({
+          username: Type.String(),
+          email: Type.String({ format: 'email' }),
+          password: Type.String(),
+          hash: Type.String()
+        })),
+        response: {
+          200: Type.Object({
+            _id: Type.String()
+          })
+        }
+      }
+    },
+    async (req) => {
+      const _id = req.user._id
+      if (req.body.password) {
+        const hash = await bcrypt.hash(req.body.password, 10)
+        req.body.hash = hash
+        delete req.body.password
+      }
+      
+      await collections.users.updateOne(
+        { _id },
+        {
+          $set: req.body
+        }
+      )
+      return { _id }
+    }
+  )
+
+  server.post(
     '/login',
     {
       schema: {
