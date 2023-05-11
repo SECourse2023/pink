@@ -12,7 +12,8 @@ const LinkListView = ({ pinId }: { pinId: string }) => {
 
   useEffect(() => {
     const fetchLinks = async () => {
-      const response = await ky.get(`/api/pin/${pinId}/links`).json()
+      const params = new URLSearchParams({ from: pinId })
+      const response = await ky.get(`/api/query/getLinkOf?${params.toString()}`).json()
       setLinks(response.data)
     }
 
