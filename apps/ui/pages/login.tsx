@@ -47,7 +47,6 @@ export default function Login() {
     if (!response) return
 
     setAuthToken(response.token)
-    localStorage.setItem('token', response.token)
     router.push('/')
   }
 
