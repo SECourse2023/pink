@@ -43,11 +43,12 @@ export const userController: FastifyPluginAsyncTypebox = async (server) => {
       schema: {
         body: Type.Partial(
           Type.Object({
-          username: Type.String(),
-          email: Type.String({ format: 'email' }),
-          password: Type.String(),
-          hash: Type.String()
-        })),
+            username: Type.String(),
+            email: Type.String({ format: 'email' }),
+            password: Type.String(),
+            hash: Type.String()
+          })
+        ),
         response: {
           200: Type.Object({
             _id: Type.String()
@@ -62,7 +63,7 @@ export const userController: FastifyPluginAsyncTypebox = async (server) => {
         req.body.hash = hash
         delete req.body.password
       }
-      
+
       await collections.users.updateOne(
         { _id },
         {
