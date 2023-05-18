@@ -1,20 +1,17 @@
 import { ChakraProvider } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
 import Layout from '../components/layout'
-import { AuthContext } from '../contexts/auth'
-import useLocalStorage from '../hooks/use-local-storage'
+import { AuthContextProvider } from '../contexts/auth'
 
 function App({ Component, pageProps }: AppProps) {
-  const [authToken, setAuthToken] = useLocalStorage('token', '')
-
   return (
-    <AuthContext.Provider value={[authToken, setAuthToken]}>
+    <AuthContextProvider>
       <ChakraProvider>
         <Layout>
           <Component {...pageProps} />
         </Layout>
       </ChakraProvider>
-    </AuthContext.Provider>
+    </AuthContextProvider>
   )
 }
 
