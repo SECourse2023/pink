@@ -1,20 +1,64 @@
-import React, { useState } from 'react'
-import { Flex, Box, Input, Button } from '@chakra-ui/react'
+import React, { useState, useEffect } from 'react'
+import { Flex, Box, Input, Button, useToast, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter } from '@chakra-ui/react'
+import { http } from '../utils/ky'
 
-interface QueryViewProps {
-  onSubmit: (fromDoid: string, toDoid: string) => void
-}
-
-const QueryView: React.FC<QueryViewProps> = ({ onSubmit }) => {
+const QueryView: React.FC = () => {
   const [fromDoid, setFromDoid] = useState('')
   const [toDoid, setToDoid] = useState('')
+  const [result, setResult] = useState<any>(null)
+  const [isOpen, setIsOpen] = useState(false)
+  const [shouldSubmit, setShouldSubmit] = useState(false)
+  const toast = useToast()
 
   const handleSubmit = () => {
-    onSubmit(fromDoid, toDoid)
+    setShouldSubmit(true)
   }
+
+  const handleClose = () => {
+    setIsOpen(false)
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!shouldSubmit) {
+        return
+      }
+
+      try {
+        const data = await http.post('/api/query/getLinkOf', {
+          json: {
+            from: fromDoid,
+            to: toDoid
+          }
+        }).json()
+        setResult(data)
+        toast({
+          title: "Request successful.",
+          description: "We've sent your request to the server.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        })
+        setIsOpen(true)
+      } catch (error) {
+        console.error(error);
+      }
+      
+      setShouldSubmit(false)
+    }
+
+    fetchData()
+  }, [fromDoid, toDoid, shouldSubmit])
 
   return (
     <Flex
+      direction="column"
+      alignItems="center"
+      justifyContent="center"
+      height="100vh"
+      bg="gray.100"
+    >
+      {<Flex
       direction="column"
       alignItems="center"
       justifyContent="center"
@@ -55,8 +99,27 @@ const QueryView: React.FC<QueryViewProps> = ({ onSubmit }) => {
           >
             Submit
           </Button>
+          {result && (
+            <pre>{JSON.stringify(result, null, 2)}</pre>
+          )}
         </Box>
       </Box>
+    </Flex>}
+      <Modal isOpen={isOpen} onClose={handleClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>Result</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            {JSON.stringify(result)}
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="blue" onClick={handleClose}>
+              Close
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Flex>
   )
 }
