@@ -14,6 +14,7 @@
     "prettier": "^2.5.1"
   },
   "scripts": {
+    "prettier": "npx prettier --write .",
     "postinstall": "husky install",
     "check:format": "prettier --ignore-path .gitignore --check \"**/*.{ts,tsx,js,jsx,json,yml,md}\"",
     "git:pre-commit": "yarn check:format"
