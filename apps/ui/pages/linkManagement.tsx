@@ -32,10 +32,10 @@ interface LinkListViewProps {
 }
 
 type FormData = {
-  from: string,
-  to: string,
-  type: string,
-  metadata_title: string,
+  from: string
+  to: string
+  type: string
+  metadata_title: string
   metadata_description: string
 }
 
