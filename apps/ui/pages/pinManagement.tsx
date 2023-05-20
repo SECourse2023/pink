@@ -22,12 +22,19 @@ import {
   Text,
   useDisclosure
 } from '@chakra-ui/react'
+import { useForm } from 'react-hook-form'
 import type { Pin } from '../components/types'
 import { http } from '../utils/ky'
 import { AuthContext } from '../contexts/auth'
 
 interface PinListViewProps {
   pins: Pin[]
+}
+
+type FormData = {
+  type: string
+  metadata_title: string
+  metadata_description: string
 }
 
 const PinManagementView: React.FC<PinListViewProps> = () => {
@@ -37,6 +44,21 @@ const PinManagementView: React.FC<PinListViewProps> = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [pins, setPins] = useState<any[]>([])
   const [authToken, setAuthToken] = useContext(AuthContext)
+
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isSubmitting },
+    setError
+  } = useForm<FormData>()
+
+  const onSubmit = async ({ type, metadata_title, metadata_description }: FormData) => {
+    const metadata = { title: metadata_title, description: metadata_description }
+    const response = await http
+      .post('/api/pin/create', { json: { type, metadata } })
+      .json<{ token: string }>()
+    if (!response) return
+  }
 
   useEffect(() => {
     if (authToken) {
@@ -65,28 +87,27 @@ const PinManagementView: React.FC<PinListViewProps> = () => {
     onClose()
   }
 
-  const addPin = () => {}
-
   return (
     <VStack spacing={4}>
-      <Box>
-        <Button colorScheme="pink" onClick={openAddModal}>
+      <Box margin={5}>
+        <Button colorScheme="pink" onClick={openAddModal} size="lg">
           Add Pin
         </Button>
       </Box>
       <Table variant="simple">
         <Thead>
           <Tr>
+            <Th>Title</Th>
+            <Th>Description</Th>
             <Th>Type</Th>
-            <Th>Metadata</Th>
-            <Th>Actions</Th>
           </Tr>
         </Thead>
         <Tbody>
           {pins.map((pin) => (
             <Tr key={pin._id}>
-              <Td>{pin.type}</Td>
               <Td>{'' + pin.metadata.title}</Td>
+              <Td>{'' + pin.metadata.description}</Td>
+              <Td>{'' + pin.type}</Td>
               <Td>
                 <Button colorScheme="blue" mr={3} onClick={() => openViewModal(pin)}>
                   View
@@ -102,24 +123,34 @@ const PinManagementView: React.FC<PinListViewProps> = () => {
         <ModalContent>
           {adding && (
             <>
-              <ModalHeader>Add Pin</ModalHeader>
-              <ModalCloseButton />
-              <ModalBody>
-                <FormControl>
-                  <FormLabel>Pin Type</FormLabel>
-                  <Input placeholder="Pin Type" />
-                </FormControl>
-                <FormControl mt={4}>
-                  <FormLabel>Pin Metadata</FormLabel>
-                  <Input placeholder="Pin Metadata" />
-                </FormControl>
-              </ModalBody>
-              <ModalFooter>
-                <Button colorScheme="green" mr={3} onClick={addPin}>
-                  Add
-                </Button>
-                <Button onClick={closeModal}>Cancel</Button>
-              </ModalFooter>
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <ModalHeader>Add Pin</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                  <FormControl>
+                    <FormLabel>Pin Type</FormLabel>
+                    <Input
+                      placeholder="Pin Type"
+                      {...register('type', {
+                        required: 'Pin Type is required'
+                      })}
+                    />
+                    <FormLabel>Pin Metadata Title</FormLabel>
+                    <Input placeholder="Pin Metadata Title" {...register('metadata_title')} />
+                    <FormLabel>Pin Metadata Title</FormLabel>
+                    <Input
+                      placeholder="Pin Metadata Description"
+                      {...register('metadata_description')}
+                    />
+                  </FormControl>
+                </ModalBody>
+                <ModalFooter>
+                  <Button colorScheme="green" mr={3} type="submit">
+                    Add
+                  </Button>
+                  <Button onClick={closeModal}>Cancel</Button>
+                </ModalFooter>
+              </form>
             </>
           )}
           {viewing && selectedPin && (
@@ -133,7 +164,7 @@ const PinManagementView: React.FC<PinListViewProps> = () => {
                 <Text fontSize="sm" fontWeight="bold">
                   {'Title: ' + selectedPin.metadata.title}
                 </Text>
-                <Text fontSize="xs" color="gray.500">
+                <Text fontSize="sm" color="gray.500">
                   {'Description: ' + selectedPin.metadata.description}
                 </Text>
               </ModalBody>
