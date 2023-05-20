@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import {
   Box,
   Button,
@@ -23,16 +23,29 @@ import {
   useDisclosure
 } from '@chakra-ui/react'
 import type { Pin } from '../components/types'
+import { http } from '../utils/ky'
+import { AuthContext } from '../contexts/auth'
 
 interface PinListViewProps {
   pins: Pin[]
 }
 
-const PinListView: React.FC<PinListViewProps> = ({ pins }) => {
+const PinManagementView: React.FC<PinListViewProps> = () => {
   const [selectedPin, setSelectedPin] = useState<Pin | null>(null)
   const [viewing, setViewing] = useState(false)
   const [adding, setAdding] = useState(false)
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const [pins, setPins] = useState<any[]>([])
+  const [authToken, setAuthToken] = useContext(AuthContext)
+
+  useEffect(() => {
+    if (authToken) {
+      http
+        .get('/api/pin/list')
+        .json()
+        .then((data) => setPins(data as any))
+    }
+  }, [authToken])
 
   const openViewModal = (pin: Pin) => {
     setSelectedPin(pin)
@@ -51,6 +64,8 @@ const PinListView: React.FC<PinListViewProps> = ({ pins }) => {
     setAdding(false)
     onClose()
   }
+
+  const addPin = () => {}
 
   return (
     <VStack spacing={4}>
@@ -100,7 +115,7 @@ const PinListView: React.FC<PinListViewProps> = ({ pins }) => {
                 </FormControl>
               </ModalBody>
               <ModalFooter>
-                <Button colorScheme="green" mr={3}>
+                <Button colorScheme="green" mr={3} onClick={addPin}>
                   Add
                 </Button>
                 <Button onClick={closeModal}>Cancel</Button>
@@ -136,4 +151,4 @@ const PinListView: React.FC<PinListViewProps> = ({ pins }) => {
   )
 }
 
-export default PinListView
+export default PinManagementView
