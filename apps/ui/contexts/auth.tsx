@@ -17,7 +17,7 @@ function useLocalStorage(key: string, defaultValue: string): [string, (value: st
   return [value, setValue]
 }
 
-export const AuthContextProvider = ({ children }) => {
+export const AuthContextProvider = ({ children }: { children: any }) => {
   const [authToken, setAuthToken] = useLocalStorage('token', '')
 
   return <AuthContext.Provider value={[authToken, setAuthToken]}>{children}</AuthContext.Provider>
