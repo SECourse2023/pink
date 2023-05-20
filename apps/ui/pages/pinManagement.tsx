@@ -119,6 +119,8 @@ const PinManagementView: React.FC<PinListViewProps> = () => {
     onClose()
   }
 
+  const addPin = () => {}
+
   return (
     <VStack spacing={4}>
       <Box margin={5}>
