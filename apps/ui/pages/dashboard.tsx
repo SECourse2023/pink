@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { Box, Flex, Heading } from '@chakra-ui/react'
+import { Box, Button, Flex, Heading, Link } from '@chakra-ui/react'
+import NextLink from 'next/link'
 import PinListView from '../components/PinListView'
 import { http } from '../utils/ky'
 import { AuthContext } from '../contexts/auth'
@@ -16,12 +17,15 @@ const DashBoardView: React.FC = () => {
     }
   }, [authToken])
   return (
-    <Flex>
-      <Box width="2/7" backgroundColor="white">
+    <Flex ml={20}>
+      <Box width="2/7" backgroundColor="white" boxShadow="md">
         <Heading as="h1" size="lg" textAlign="center" py={5}>
-          Pink
+          Pins
         </Heading>
         <PinListView pins={pins} />
+        <Link href="/pinManagement">
+          <Button colorScheme="blue">Manage Pins</Button>
+        </Link>
       </Box>
       <Box width="5/7" backgroundColor="gray.100">
         {/* Right side content */}

@@ -66,7 +66,7 @@ const PinManagementView: React.FC<PinListViewProps> = () => {
     metadata_title,
     metadata_description
   }: FormData) => {
-    const id = selectedPin?._id
+    const id = encodeURIComponent(selectedPin?._id ?? '')
     const metadata = { title: metadata_title, description: metadata_description }
     const response = await http.put('/api/pin/' + id, { json: { type, metadata } })
     if (!response) return
@@ -74,7 +74,7 @@ const PinManagementView: React.FC<PinListViewProps> = () => {
   }
 
   const onDeletePin = async () => {
-    const id = selectedPin?._id
+    const id = encodeURIComponent(selectedPin?._id ?? '')
     const response = await http.delete('/api/pin/' + id)
     if (!response) return
     window.location.reload()
