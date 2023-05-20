@@ -42,6 +42,7 @@ const PinManagementView: React.FC<PinListViewProps> = () => {
   const [viewing, setViewing] = useState(false)
   const [adding, setAdding] = useState(false)
   const [updating, setUpdating] = useState(false)
+  const [deleting, setDeleting] = useState(false)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [pins, setPins] = useState<any[]>([])
   const [authToken, setAuthToken] = useContext(AuthContext)
@@ -75,7 +76,7 @@ const PinManagementView: React.FC<PinListViewProps> = () => {
   const onDeletePin = async () => {
     const id = selectedPin?._id
     const response = await http.delete('/api/pin/' + id)
-    closeModal()
+    if (!response) return
     window.location.reload()
   }
 
@@ -104,11 +105,17 @@ const PinManagementView: React.FC<PinListViewProps> = () => {
     onOpen()
   }
 
+  const openDeleteModal = () => {
+    setDeleting(true)
+    onOpen()
+  }
+
   const closeModal = () => {
     setSelectedPin(null)
     setViewing(false)
     setAdding(false)
     setUpdating(false)
+    setDeleting(false)
     onClose()
   }
 
@@ -199,7 +206,7 @@ const PinManagementView: React.FC<PinListViewProps> = () => {
                 <Button colorScheme="blue" mr={3}>
                   Manage Links
                 </Button>
-                <Button colorScheme="red" mr={3}>
+                <Button colorScheme="red" mr={3} onClick={openDeleteModal}>
                   Delete
                 </Button>
                 <Button colorScheme="green" mr={3} onClick={openUpdateModal}>
@@ -228,6 +235,25 @@ const PinManagementView: React.FC<PinListViewProps> = () => {
                 <ModalFooter>
                   <Button colorScheme="green" mr={3} type="submit">
                     Update
+                  </Button>
+                  <Button onClick={closeModal}>Cancel</Button>
+                </ModalFooter>
+              </form>
+            </>
+          )}
+          {deleting && selectedPin && (
+            <>
+              <form onSubmit={handleSubmit(onDeletePin)}>
+                <ModalHeader>Delete Pin</ModalHeader>
+                <ModalCloseButton />
+                <ModalBody>
+                  <Text>
+                    Are you sure you want to delete the pin with ID <b>{'' + selectedPin._id}</b>?
+                  </Text>
+                </ModalBody>
+                <ModalFooter>
+                  <Button colorScheme="red" mr={3} type="submit">
+                    Delete
                   </Button>
                   <Button onClick={closeModal}>Cancel</Button>
                 </ModalFooter>
