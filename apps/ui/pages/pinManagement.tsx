@@ -22,20 +22,13 @@ import {
   Text,
   useDisclosure
 } from '@chakra-ui/react'
+import type { Pin } from '../components/types'
 
-interface Pin {
-  id: number
-  type: string
-  metadata: string
+interface PinListViewProps {
+  pins: Pin[]
 }
 
-const pinData: Pin[] = [
-  { id: 1, type: 'Type1', metadata: 'Metadata1' },
-  { id: 2, type: 'Type2', metadata: 'Metadata2' }
-  //... 更多的Pin数据
-]
-
-const PinListView: React.FC = () => {
+const PinListView: React.FC<PinListViewProps> = ({ pins }) => {
   const [selectedPin, setSelectedPin] = useState<Pin | null>(null)
   const [viewing, setViewing] = useState(false)
   const [adding, setAdding] = useState(false)
@@ -75,10 +68,10 @@ const PinListView: React.FC = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {pinData.map((pin) => (
-            <Tr key={pin.id}>
+          {pins.map((pin) => (
+            <Tr key={pin._id}>
               <Td>{pin.type}</Td>
-              <Td>{pin.metadata}</Td>
+              <Td>{'' + pin.metadata.title}</Td>
               <Td>
                 <Button colorScheme="blue" mr={3} onClick={() => openViewModal(pin)}>
                   View
@@ -122,8 +115,11 @@ const PinListView: React.FC = () => {
                 <Text mb={2}>
                   <strong>Type:</strong> {selectedPin.type}
                 </Text>
-                <Text>
-                  <strong>Metadata:</strong> {selectedPin.metadata}
+                <Text fontSize="sm" fontWeight="bold">
+                  {'Title: ' + selectedPin.metadata.title}
+                </Text>
+                <Text fontSize="xs" color="gray.500">
+                  {'Description: ' + selectedPin.metadata.description}
                 </Text>
               </ModalBody>
               <ModalFooter>
