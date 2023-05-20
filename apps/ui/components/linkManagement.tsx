@@ -40,7 +40,7 @@ type FormData = {
   metadata_description: string
 }
 
-const LinkManagementView: React.FC<LinkListViewProps> = ({fromurl}) => {
+const LinkManagementView: React.FC<LinkListViewProps> = ({ fromurl }) => {
   const fromid = decodeURIComponent(fromurl as string)
   const [selectedLink, setSelectedLink] = useState<Link | null>(null)
   const [viewing, setViewing] = useState(false)
@@ -56,22 +56,22 @@ const LinkManagementView: React.FC<LinkListViewProps> = ({fromurl}) => {
     setError
   } = useForm<FormData>()
 
-  const onSubmit = async ({  to, type, metadata_title, metadata_description }: FormData) => {
+  const onSubmit = async ({ to, type, metadata_title, metadata_description }: FormData) => {
     const metadata = { title: metadata_title, description: metadata_description }
     const response = await http
-      .post('/api/link/create', { json: { from:fromid, to, type, metadata } })
+      .post('/api/link/create', { json: { from: fromid, to, type, metadata } })
       .json<{ token: string }>()
     if (!response) return
   }
 
   useEffect(() => {
-    if (authToken) {
+    if (authToken && fromid) {
       http
         .get(`/api/link/list?from=${fromid}`)
         .json()
         .then((data) => setLinks(data as any))
     }
-  }, [authToken,fromid])
+  }, [authToken, fromid])
 
   const openViewModal = (link: Link) => {
     setSelectedLink(link)
