@@ -51,10 +51,13 @@ export const linkController: FastifyPluginAsyncTypebox = async (server) => {
     {
       schema: {
         querystring: Type.Partial(
-          Type.Object({
-            from: Type.String(),
-            to: Type.String()
-          })
+          Type.Object(
+            {
+              from: Type.String(),
+              to: Type.String()
+            },
+            { additionalProperties: false }
+          )
         ),
         response: {
           200: Type.Array(linkSchema)
@@ -64,7 +67,7 @@ export const linkController: FastifyPluginAsyncTypebox = async (server) => {
     async (req) => {
       const { from, to } = req.query
       if (!from && !to) throw server.httpErrors.badRequest()
-      const links = await collections.links.find({ from, to }).toArray()
+      const links = await collections.links.find(req.query).toArray()
       return links
     }
   )
