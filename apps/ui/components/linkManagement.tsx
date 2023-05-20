@@ -26,9 +26,10 @@ import { useForm } from 'react-hook-form'
 import type { Link } from '../components/types'
 import { http } from '../utils/ky'
 import { AuthContext } from '../contexts/auth'
+import { useRouter } from 'next/router'
 
 interface LinkListViewProps {
-  links: Link[]
+  fromurl: string
 }
 
 type FormData = {
@@ -39,7 +40,8 @@ type FormData = {
   metadata_description: string
 }
 
-const LinkManagementView: React.FC<LinkListViewProps> = () => {
+const LinkManagementView: React.FC<LinkListViewProps> = ({fromurl}) => {
+  const fromid = decodeURIComponent(fromurl as string)
   const [selectedLink, setSelectedLink] = useState<Link | null>(null)
   const [viewing, setViewing] = useState(false)
   const [adding, setAdding] = useState(false)
@@ -54,10 +56,10 @@ const LinkManagementView: React.FC<LinkListViewProps> = () => {
     setError
   } = useForm<FormData>()
 
-  const onSubmit = async ({ from, to, type, metadata_title, metadata_description }: FormData) => {
+  const onSubmit = async ({  to, type, metadata_title, metadata_description }: FormData) => {
     const metadata = { title: metadata_title, description: metadata_description }
     const response = await http
-      .post('/api/link/create', { json: { from, to, type, metadata } })
+      .post('/api/link/create', { json: { from:fromid, to, type, metadata } })
       .json<{ token: string }>()
     if (!response) return
   }
@@ -65,11 +67,11 @@ const LinkManagementView: React.FC<LinkListViewProps> = () => {
   useEffect(() => {
     if (authToken) {
       http
-        .get('/api/link/list')
+        .get(`/api/link/list?from=${fromid}`)
         .json()
         .then((data) => setLinks(data as any))
     }
-  }, [authToken])
+  }, [authToken,fromid])
 
   const openViewModal = (link: Link) => {
     setSelectedLink(link)
@@ -135,12 +137,7 @@ const LinkManagementView: React.FC<LinkListViewProps> = () => {
                 <ModalBody>
                   <FormControl>
                     <FormLabel>Link From</FormLabel>
-                    <Input
-                      placeholder="Link From"
-                      {...register('from', {
-                        required: 'Link From is required'
-                      })}
-                    />
+                    <Input type="text" value={fromid} />
                     <FormLabel>Link To</FormLabel>
                     <Input
                       placeholder="Link To"
