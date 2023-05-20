@@ -5,7 +5,11 @@ export interface Pin {
 }
 
 export interface Link {
-  id: number
+  _id: string
+  from: string
+  to: string
+  type: string
+  metadata: Record<string, unknown>
 }
 
 export interface User {
