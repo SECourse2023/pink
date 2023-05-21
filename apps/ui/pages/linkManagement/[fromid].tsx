@@ -1,6 +1,6 @@
 // pages/linkManagement/[fromid].tsx
 import { useRouter } from 'next/router'
-import LinkManagementView from '../../components/linkManagement'
+import LinkManagementView from './linkManageview'
 
 export default function PinIdPage() {
   const router = useRouter()

@@ -23,9 +23,9 @@ import {
   useDisclosure
 } from '@chakra-ui/react'
 import { useForm } from 'react-hook-form'
-import type { Link } from '../components/types'
-import { http } from '../utils/ky'
-import { AuthContext } from '../contexts/auth'
+import type { Link } from '../../components/types'
+import { http } from '../../utils/ky'
+import { AuthContext } from '../../contexts/auth'
 import { useRouter } from 'next/router'
 
 interface LinkListViewProps {
