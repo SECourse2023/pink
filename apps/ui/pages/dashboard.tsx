@@ -39,9 +39,11 @@ const DashBoardView: React.FC = () => {
           Pins
         </Heading>
         <PinListView pins={pins} handlePinClick={handlePinClick} />
-        <Link href="/pinManagement">
-          <Button colorScheme="blue">Manage Pins</Button>
-        </Link>
+        <Flex justifyContent="center">
+          <Link href="/pinManagement">
+            <Button colorScheme="blue">Manage Pins</Button>
+          </Link>
+        </Flex>
       </Box>
       {selectedPin && (
         <Box flex="0.75" backgroundColor="white" boxShadow="md">
@@ -49,9 +51,11 @@ const DashBoardView: React.FC = () => {
             Links
           </Heading>
           <LinkListView links={links} />
-          <Link href={`/linkManagement/${encodeURIComponent(selectedPin._id)}`}>
-            <Button colorScheme="blue">Manage Links</Button>
-          </Link>
+          <Flex justifyContent="center">
+            <Link href={`/linkManagement/${encodeURIComponent(selectedPin._id)}`}>
+              <Button colorScheme="blue">Manage Links</Button>
+            </Link>
+          </Flex>
         </Box>
       )}
     </Flex>

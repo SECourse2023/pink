@@ -103,11 +103,13 @@ const PinManagementView: React.FC<PinListViewProps> = () => {
 
   const openUpdateModal = () => {
     setUpdating(true)
+    setDeleting(false)
     onOpen()
   }
 
   const openDeleteModal = () => {
     setDeleting(true)
+    setUpdating(false)
     onOpen()
   }
 
@@ -209,11 +211,11 @@ const PinManagementView: React.FC<PinListViewProps> = () => {
                     Manage Links
                   </Button>
                 </NextLink>
-                <Button colorScheme="red" mr={3} onClick={openDeleteModal}>
-                  Delete
-                </Button>
                 <Button colorScheme="green" mr={3} onClick={openUpdateModal}>
                   Update
+                </Button>
+                <Button colorScheme="red" mr={3} onClick={openDeleteModal}>
+                  Delete
                 </Button>
               </ModalFooter>
             </>
@@ -225,7 +227,13 @@ const PinManagementView: React.FC<PinListViewProps> = () => {
                 <ModalCloseButton />
                 <ModalBody>
                   <FormControl>
-                    <FormLabel>Pin Type: {'' + selectedPin.type}</FormLabel>
+                    <FormLabel>Pin Type</FormLabel>
+                    <Input
+                      placeholder="Pin Type"
+                      value={selectedPin.type}
+                      isReadOnly
+                      style={{ backgroundColor: '#F4F4F4', cursor: 'not-allowed' }}
+                    />
                     <FormLabel>Pin Metadata Title</FormLabel>
                     <Input placeholder="Pin Metadata Title" {...register('metadata_title')} />
                     <FormLabel>Pin Metadata Description</FormLabel>

@@ -165,6 +165,7 @@ const LinkManagementView: React.FC<LinkListViewProps> = ({ fromurl }) => {
     setSelectedLink(null)
     setViewing(false)
     setAdding(false)
+    setEditing(false)
     onClose()
   }
 
@@ -260,29 +261,29 @@ const LinkManagementView: React.FC<LinkListViewProps> = ({ fromurl }) => {
               <ModalHeader>Link Details</ModalHeader>
               <ModalCloseButton />
               <ModalBody>
-                <Text mb={2}>
-                  <strong>From (Title):</strong> {fromTitle}
+                <Text>
+                  <b>From Title</b>: {'' + fromTitle}
                 </Text>
-                <Text mb={2} fontSize="sm" color="gray.500">
-                  From (ID): {selectedLink.from}
+                <Text>
+                  <b>From ID</b>: {'' + selectedLink.from}
                 </Text>
-                <Text mb={2}>
-                  <strong>To (Title):</strong> {toTitle}
+                <Text>
+                  <b>To Title</b>: {'' + toTitle}
                 </Text>
-                <Text mb={2} fontSize="sm" color="gray.500">
-                  To (ID): {selectedLink.to}
+                <Text>
+                  <b>To ID</b>: {'' + selectedLink.to}
                 </Text>
-                <Text mb={2}>
-                  <strong>Link ID:</strong> {selectedLink._id}
+                <Text>
+                  <b>Link ID</b>: {'' + selectedLink._id}
                 </Text>
-                <Text mb={2}>
-                  <strong>Type:</strong> {selectedLink.type}
+                <Text>
+                  <b>Link Type</b>: {'' + selectedLink.type}
                 </Text>
-                <Text fontSize="sm" fontWeight="bold">
-                  {'Title: ' + selectedLink.metadata.title}
+                <Text>
+                  <b>Link Title</b>: {'' + selectedLink.metadata.title}
                 </Text>
-                <Text fontSize="sm" color="gray.500">
-                  {'Description: ' + selectedLink.metadata.description}
+                <Text>
+                  <b>Link Description</b>: {'' + selectedLink.metadata.description}
                 </Text>
               </ModalBody>
               <ModalFooter>
@@ -318,10 +319,9 @@ const LinkManagementView: React.FC<LinkListViewProps> = ({ fromurl }) => {
                     <FormLabel>Link Type</FormLabel>
                     <Input
                       placeholder="Link Type"
-                      defaultValue={selectedLink.type}
-                      {...register('type', {
-                        required: 'Link Type is required'
-                      })}
+                      value={selectedLink.type}
+                      isReadOnly
+                      style={{ backgroundColor: '#F4F4F4', cursor: 'not-allowed' }}
                     />
                     <FormLabel>Link Metadata Title</FormLabel>
                     <Input
