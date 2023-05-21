@@ -1,63 +1,84 @@
-import React, { useState } from 'react'
-import { Flex, Box, Input, Button } from '@chakra-ui/react'
+import React, { useEffect, useState, useContext } from 'react'
+import {
+  Box,
+  Button,
+  VStack,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  FormControl,
+  FormLabel,
+  Input
+} from '@chakra-ui/react'
+import { AuthContext } from '../contexts/auth'
+import { http } from '../utils/ky'
+import type { Link } from '../components/types'
 
-interface QueryViewProps {
-  onSubmit: (fromDoid: string, toDoid: string) => void
-}
+const QueryView: React.FC = () => {
+  const [fromIdQuery, setFromIdQuery] = useState('')
+  const [toIdQuery, setToIdQuery] = useState('')
+  const [links, setLinks] = useState<Link[]>([])
+  const [authToken] = useContext(AuthContext)
 
-const QueryView: React.FC<QueryViewProps> = ({ onSubmit }) => {
-  const [fromDoid, setFromDoid] = useState('')
-  const [toDoid, setToDoid] = useState('')
-
-  const handleSubmit = () => {
-    onSubmit(fromDoid, toDoid)
+  const queryLink = async () => {
+    if (authToken && fromIdQuery && toIdQuery) {
+      const response = await http
+        .post('/api/query/getLinkOf', {
+          json: {
+            from: fromIdQuery,
+            to: toIdQuery
+          }
+        })
+        .json()
+      if (Array.isArray(response)) {
+        setLinks(response as Link[])
+      }
+    }
   }
 
+  useEffect(() => {
+    queryLink()
+  }, [authToken, fromIdQuery, toIdQuery])
+
   return (
-    <Flex
-      direction="column"
-      alignItems="center"
-      justifyContent="center"
-      height="100vh"
-      bg="gray.100"
-    >
-      <Box
-        w="100%"
-        maxWidth="500px"
-        p="2rem"
-        boxShadow="0 2px 8px rgba(0, 0, 0, 0.1)"
-        borderRadius="8px"
-        bg="white"
-      >
-        <Box as="form" w="100%">
-          <Input
-            mb="1rem"
-            type="text"
-            value={fromDoid}
-            onChange={(e) => setFromDoid(e.target.value)}
-            placeholder="From DOID"
-            variant="outline"
-          />
-          <Input
-            mb="1rem"
-            type="text"
-            value={toDoid}
-            onChange={(e) => setToDoid(e.target.value)}
-            placeholder="To DOID"
-            variant="outline"
-          />
-          <Button
-            onClick={handleSubmit}
-            bg="#2196f3"
-            color="white"
-            fontWeight="bold"
-            borderRadius="4px"
-          >
-            Submit
+    <VStack spacing={4}>
+      <Box margin={5}>
+        <FormControl>
+          <FormLabel>From ID</FormLabel>
+          <Input type="text" value={fromIdQuery} onChange={(e) => setFromIdQuery(e.target.value)} />
+          <FormLabel>To ID</FormLabel>
+          <Input type="text" value={toIdQuery} onChange={(e) => setToIdQuery(e.target.value)} />
+          <Button colorScheme="blue" onClick={queryLink} mt={3}>
+            Query
           </Button>
-        </Box>
+        </FormControl>
       </Box>
-    </Flex>
+      <Table variant="simple">
+        <Thead>
+          <Tr>
+            <Th>From</Th>
+            <Th>To</Th>
+            <Th>Type</Th>
+            <Th>Title</Th>
+            <Th>Description</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {links.map((link) => (
+            <Tr key={link._id}>
+              <Td>{link.from}</Td>
+              <Td>{link.to}</Td>
+              <Td>{link.type}</Td>
+              <Td>{(link.metadata as { title: string }).title}</Td>
+              <Td>{(link.metadata as { description: string }).description}</Td>
+            </Tr>
+          ))}
+        </Tbody>
+      </Table>
+    </VStack>
   )
 }
 
