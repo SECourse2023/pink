@@ -42,11 +42,14 @@ function ProfileView() {
           src={'https://cravatar.cn/avatar/' + md5(profile.email ?? '') + '?s=256&d=robohash&r=pg'}
         />
       </Flex>
-      <Flex>
+      <VStack>
         <Heading as="h1" size="xl" mx="10" my="10">
           {profile.username}
         </Heading>
-      </Flex>
+        <Text mx="10" my="10">
+          {profile.email}
+        </Text>
+      </VStack>
       <Flex>
         <Button mx="10" my="10" colorScheme="red" variant="outline" onClick={logout}>
           退出登录
