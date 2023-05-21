@@ -39,7 +39,6 @@ function ProfileView() {
           mx="10"
           my="10"
           size="2xl"
-          name="Donald Trump"
           src={'https://cravatar.cn/avatar/' + md5(profile.email ?? '') + '?s=256&d=robohash&r=pg'}
         />
       </Flex>
