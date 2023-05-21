@@ -26,6 +26,7 @@ import { useForm } from 'react-hook-form'
 import type { Pin } from '../components/types'
 import { http } from '../utils/ky'
 import { AuthContext } from '../contexts/auth'
+import NextLink from 'next/link'
 
 interface PinListViewProps {
   pins: Pin[]
@@ -203,9 +204,11 @@ const PinManagementView: React.FC<PinListViewProps> = () => {
                 </Text>
               </ModalBody>
               <ModalFooter>
-                <Button colorScheme="blue" mr={3}>
-                  Manage Links
-                </Button>
+                <NextLink href={`/linkManagement/${encodeURIComponent(selectedPin._id)}`} passHref>
+                  <Button as="a" colorScheme="blue" mr={3}>
+                    Manage Links
+                  </Button>
+                </NextLink>
                 <Button colorScheme="red" mr={3} onClick={openDeleteModal}>
                   Delete
                 </Button>
