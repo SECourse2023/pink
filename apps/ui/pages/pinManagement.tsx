@@ -34,8 +34,11 @@ interface PinListViewProps {
 
 type FormData = {
   type: string | undefined
-  metadata_title: string
-  metadata_description: string
+  metadata: {
+    title: string
+    description: string
+    doid: string
+  }
 }
 
 const PinManagementView: React.FC<PinListViewProps> = () => {
@@ -55,30 +58,36 @@ const PinManagementView: React.FC<PinListViewProps> = () => {
     setError
   } = useForm<FormData>()
 
-  const onSubmit = async ({ type, metadata_title, metadata_description }: FormData) => {
-    const metadata = { title: metadata_title, description: metadata_description }
+  const onSubmit = async ({ type, metadata }: FormData) => {
     const response = await http.post('/api/pin/create', { json: { type, metadata } })
     if (!response) return
-    window.location.reload()
+    refreshPinList()
+    closeModal()
   }
 
-  const onUpdatePin = async ({
-    type = selectedPin?.type,
-    metadata_title,
-    metadata_description
-  }: FormData) => {
+  const onUpdatePin = async ({ type = selectedPin?.type, metadata }: FormData) => {
     const id = encodeURIComponent(selectedPin?._id ?? '')
-    const metadata = { title: metadata_title, description: metadata_description }
     const response = await http.put('/api/pin/' + id, { json: { type, metadata } })
     if (!response) return
-    window.location.reload()
+    refreshPinList()
+    closeModal()
   }
 
   const onDeletePin = async () => {
     const id = encodeURIComponent(selectedPin?._id ?? '')
     const response = await http.delete('/api/pin/' + id)
     if (!response) return
-    window.location.reload()
+    refreshPinList()
+    closeModal()
+  }
+
+  const refreshPinList = async () => {
+    if (authToken) {
+      const response = await http.get(`/api/pin/list`).json()
+      if (Array.isArray(response)) {
+        setPins(response as Pin[])
+      }
+    }
   }
 
   useEffect(() => {
@@ -170,12 +179,14 @@ const PinManagementView: React.FC<PinListViewProps> = () => {
                       })}
                     />
                     <FormLabel>Pin Metadata Title</FormLabel>
-                    <Input placeholder="Pin Metadata Title" {...register('metadata_title')} />
+                    <Input placeholder="Pin Metadata Title" {...register('metadata.title')} />
                     <FormLabel>Pin Metadata Description</FormLabel>
                     <Input
                       placeholder="Pin Metadata Description"
-                      {...register('metadata_description')}
+                      {...register('metadata.description')}
                     />
+                    <FormLabel>DOID</FormLabel>
+                    <Input placeholder="Pin's DOID" {...register('metadata.doid')} />
                   </FormControl>
                 </ModalBody>
                 <ModalFooter>
@@ -203,6 +214,9 @@ const PinManagementView: React.FC<PinListViewProps> = () => {
                 </Text>
                 <Text>
                   <b>Description</b>: {'' + selectedPin.metadata.description}
+                </Text>
+                <Text>
+                  <b>DOID</b>: {'' + selectedPin.metadata.doid}
                 </Text>
               </ModalBody>
               <ModalFooter>
@@ -235,11 +249,11 @@ const PinManagementView: React.FC<PinListViewProps> = () => {
                       style={{ backgroundColor: '#F4F4F4', cursor: 'not-allowed' }}
                     />
                     <FormLabel>Pin Metadata Title</FormLabel>
-                    <Input placeholder="Pin Metadata Title" {...register('metadata_title')} />
+                    <Input placeholder="Pin Metadata Title" {...register('metadata.title')} />
                     <FormLabel>Pin Metadata Description</FormLabel>
                     <Input
                       placeholder="Pin Metadata Description"
-                      {...register('metadata_description')}
+                      {...register('metadata.description')}
                     />
                   </FormControl>
                 </ModalBody>

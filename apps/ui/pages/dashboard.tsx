@@ -34,7 +34,7 @@ const DashBoardView: React.FC = () => {
 
   return (
     <Flex ml="20" width="90%">
-      <Box flex="0.25" backgroundColor="white" boxShadow="md">
+      <Box flex="0.3" backgroundColor="white" boxShadow="md">
         <Heading as="h1" size="lg" textAlign="center" py={5}>
           Pins
         </Heading>
@@ -46,7 +46,7 @@ const DashBoardView: React.FC = () => {
         </Flex>
       </Box>
       {selectedPin && (
-        <Box flex="0.75" backgroundColor="white" boxShadow="md">
+        <Box flex="0.7" backgroundColor="white" boxShadow="md">
           <Heading as="h1" size="lg" textAlign="center" py={5}>
             Links
           </Heading>

@@ -37,6 +37,8 @@ interface PinResponse {
   owner: string
   metadata: {
     title: string
+    description: string
+    doid: string
     // Include other properties if needed
   }
 }
@@ -45,8 +47,11 @@ type FormData = {
   from: string
   to: string
   type: string
-  metadata_title: string
-  metadata_description: string
+  metadata: {
+    title: string
+    description: string
+    doid: string
+  }
 }
 
 const LinkManagementView: React.FC<LinkListViewProps> = ({ fromurl }) => {
@@ -74,8 +79,7 @@ const LinkManagementView: React.FC<LinkListViewProps> = ({ fromurl }) => {
     setError
   } = useForm<FormData>()
 
-  const onSubmitAdd = async ({ to, type, metadata_title, metadata_description }: FormData) => {
-    const metadata = { title: metadata_title, description: metadata_description }
+  const onSubmitAdd = async ({ to, type, metadata }: FormData) => {
     const response = await http
       .post('/api/link/create', { json: { from: fromid, to, type, metadata } })
       .json<{ token: string }>()
@@ -85,9 +89,8 @@ const LinkManagementView: React.FC<LinkListViewProps> = ({ fromurl }) => {
     closeModal()
   }
 
-  const onSubmitEdit = async ({ to, type, metadata_title, metadata_description }: FormData) => {
+  const onSubmitEdit = async ({ to, type, metadata }: FormData) => {
     if (!selectedLink) return
-    const metadata = { title: metadata_title, description: metadata_description }
     const response = await http
       .put(`/api/link/${encodeURIComponent(selectedLink._id)}`, { json: { type, metadata } })
       .json<{ token: string }>()
@@ -239,11 +242,11 @@ const LinkManagementView: React.FC<LinkListViewProps> = ({ fromurl }) => {
                       })}
                     />
                     <FormLabel>Link Metadata Title</FormLabel>
-                    <Input placeholder="Link Metadata Title" {...register('metadata_title')} />
+                    <Input placeholder="Link Metadata Title" {...register('metadata.title')} />
                     <FormLabel>Link Metadata Description</FormLabel>
                     <Input
                       placeholder="Link Metadata Description"
-                      {...register('metadata_description')}
+                      {...register('metadata.description')}
                     />
                   </FormControl>
                 </ModalBody>
@@ -327,13 +330,13 @@ const LinkManagementView: React.FC<LinkListViewProps> = ({ fromurl }) => {
                     <Input
                       placeholder="Link Metadata Title"
                       defaultValue={selectedLink.metadata.title as string}
-                      {...register('metadata_title')}
+                      {...register('metadata.title')}
                     />
                     <FormLabel>Link Metadata Description</FormLabel>
                     <Input
                       placeholder="Link Metadata Description"
                       defaultValue={selectedLink.metadata.description as string}
-                      {...register('metadata_description')}
+                      {...register('metadata.description')}
                     />
                   </FormControl>
                 </ModalBody>
