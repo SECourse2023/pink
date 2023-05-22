@@ -226,11 +226,14 @@ const PinManagementView: React.FC<PinListViewProps> = () => {
                 </Text>
               </ModalBody>
               <ModalFooter>
-                <NextLink href={`/linkManagement/${encodeURIComponent(selectedPin._id)}`} passHref>
-                  <Button as="a" colorScheme="blue" mr={3}>
-                    Manage Links
-                  </Button>
-                </NextLink>
+                <Button
+                  as={NextLink}
+                  colorScheme="blue"
+                  mr={3}
+                  href={`/linkManagement/${encodeURIComponent(selectedPin._id)}`}
+                >
+                  Manage Links
+                </Button>
                 <Button colorScheme="green" mr={3} onClick={openUpdateModal}>
                   Update
                 </Button>
