@@ -24,17 +24,20 @@ const QueryView: React.FC = () => {
   const [authToken] = useContext(AuthContext)
 
   const queryLink = async () => {
-    if (authToken && fromIdQuery && toIdQuery) {
-      const response = await http
-        .post('/api/query/getLinkOf', {
-          json: {
-            from: fromIdQuery,
-            to: toIdQuery
-          }
-        })
-        .json()
-      if (Array.isArray(response)) {
-        setLinks(response as Link[])
+    if (authToken) {
+      let query = {}
+      if (fromIdQuery) query = { ...query, from: fromIdQuery }
+      if (toIdQuery) query = { ...query, to: toIdQuery }
+
+      if (fromIdQuery || toIdQuery) {
+        const response = await http
+          .post('/api/query/getLinkOf', {
+            json: query
+          })
+          .json()
+        if (Array.isArray(response)) {
+          setLinks(response as Link[])
+        }
       }
     }
   }
