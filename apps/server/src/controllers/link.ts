@@ -28,6 +28,10 @@ export const linkController: FastifyPluginAsyncTypebox = async (server) => {
       })
       if (!fromPin) throw server.httpErrors.badRequest()
       if (fromPin.owner !== req.user._id) throw server.httpErrors.forbidden()
+      const toPin = await collections.pins.findOne({
+        _id: to
+      })
+      if (!toPin) throw server.httpErrors.badRequest()
       const _id = await registerDOID({
         role: 'link',
         type,
