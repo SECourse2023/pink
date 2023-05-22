@@ -1,4 +1,4 @@
-import { Link } from '@chakra-ui/react'
+import { Link, Spacer, HStack } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import { useContext } from 'react'
 import { AuthContext } from '../contexts/auth'
@@ -6,17 +6,13 @@ import { AuthContext } from '../contexts/auth'
 export default function UserIndicator() {
   const [authToken, setAuthToken] = useContext(AuthContext)
 
-  if (authToken) {
-    return (
-      <Link as={NextLink} href="/profile">
-        用户主页
+  return (
+    <HStack>
+      <Link href="/statsView">数据总量</Link>
+      <Spacer />
+      <Link as={NextLink} href={authToken ? `/profile` : `/login`}>
+        {authToken ? '用户主页' : '登录'}
       </Link>
-    )
-  } else {
-    return (
-      <Link as={NextLink} href="/login">
-        登录
-      </Link>
-    )
-  }
+    </HStack>
+  )
 }

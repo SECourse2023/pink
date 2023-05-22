@@ -61,9 +61,6 @@ const DashBoardView: React.FC = () => {
           </Flex>
         </Box>
       )}
-      <Link href="/statsView">
-        <Button colorScheme="blue">数据总量</Button>
-      </Link>
     </Flex>
   )
 }
