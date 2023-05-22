@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { Box, Button, Flex, Heading, Link, VStack, StackDivider } from '@chakra-ui/react'
+import { Box, Button, Flex, Heading, Link, VStack, StackDivider, HStack } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import PinListView from '../components/PinListView'
 import LinkListView from '../components/LinkListView'
@@ -33,20 +33,20 @@ const DashBoardView: React.FC = () => {
   }
 
   return (
-    <Flex ml="20" width="90%" mb={2}>
+    <Flex ml="20" width="90%" mb={5}>
       <Box flex="0.3" backgroundColor="white" boxShadow="md">
         <Heading as="h1" size="lg" textAlign="center" py={5}>
           Pins
         </Heading>
         <PinListView pins={pins} handlePinClick={handlePinClick} />
-        <VStack justifyContent="center" divider={<StackDivider borderColor="white" />} mb={2}>
-          <Link href="/pinManagement">
+        <HStack justifyContent="center" divider={<StackDivider borderColor="white" />} mb={5}>
+          <Link href={authToken ? `/pinManagement` : `/login`}>
             <Button colorScheme="blue">Manage Pins</Button>
           </Link>
-          <Link href="/query">
+          <Link href={authToken ? `/query` : `/login`}>
             <Button colorScheme="green">Query Links</Button>
           </Link>
-        </VStack>
+        </HStack>
       </Box>
       {selectedPin && (
         <Box flex="0.7" backgroundColor="white" boxShadow="md">
@@ -54,7 +54,7 @@ const DashBoardView: React.FC = () => {
             Links
           </Heading>
           <LinkListView links={links} />
-          <Flex justifyContent="center" mb={2}>
+          <Flex justifyContent="center" mb={5}>
             <Link href={`/linkManagement/${encodeURIComponent(selectedPin._id)}`}>
               <Button colorScheme="blue">Manage Links</Button>
             </Link>

@@ -5,7 +5,8 @@ import {
   FormErrorMessage,
   FormLabel,
   Input,
-  HStack
+  HStack,
+  Heading
 } from '@chakra-ui/react'
 import React, { useContext } from 'react'
 import { useRouter } from 'next/router'
@@ -52,6 +53,7 @@ export default function Login() {
 
   return (
     <Box maxW="md" mx="auto" mt={8} borderWidth="1px" borderRadius="lg" overflow="hidden">
+      <Heading textAlign="center">登录</Heading>
       <Box p="6">
         <form onSubmit={handleSubmit(onSubmit)}>
           <FormControl isInvalid={errors.username !== undefined}>
@@ -75,7 +77,7 @@ export default function Login() {
             />
             <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
           </FormControl>
-          <HStack w="full" spacing={4} mt={8}>
+          <HStack w="full" spacing={4} mt={8} justifyContent="center">
             <Button colorScheme="pink" isLoading={isSubmitting} type="submit">
               登录
             </Button>
