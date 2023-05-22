@@ -40,12 +40,12 @@ const DashBoardView: React.FC = () => {
         </Heading>
         <PinListView pins={pins} handlePinClick={handlePinClick} />
         <HStack justifyContent="center" divider={<StackDivider borderColor="white" />} mb={5}>
-          <Link href={authToken ? `/pinManagement` : `/login`}>
-            <Button colorScheme="blue">Manage Pins</Button>
-          </Link>
-          <Link href={authToken ? `/query` : `/login`}>
-            <Button colorScheme="green">Query Links</Button>
-          </Link>
+          <Button as={NextLink} href={authToken ? `/pinManagement` : `/login`} colorScheme="blue">
+            Manage Pins
+          </Button>
+          <Button as={NextLink} href={authToken ? `/query` : `/login`} colorScheme="green">
+            Query Links
+          </Button>
         </HStack>
       </Box>
       {selectedPin && (
@@ -55,9 +55,13 @@ const DashBoardView: React.FC = () => {
           </Heading>
           <LinkListView links={links} />
           <Flex justifyContent="center" mb={5}>
-            <Link href={`/linkManagement/${encodeURIComponent(selectedPin._id)}`}>
-              <Button colorScheme="blue">Manage Links</Button>
-            </Link>
+            <Button
+              as={NextLink}
+              href={`/linkManagement/${encodeURIComponent(selectedPin._id)}`}
+              colorScheme="blue"
+            >
+              Manage Links
+            </Button>
           </Flex>
         </Box>
       )}
