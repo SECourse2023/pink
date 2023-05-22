@@ -33,13 +33,13 @@ const DashBoardView: React.FC = () => {
   }
 
   return (
-    <Flex ml="20" width="90%">
+    <Flex ml="20" width="90%" mb={2}>
       <Box flex="0.3" backgroundColor="white" boxShadow="md">
         <Heading as="h1" size="lg" textAlign="center" py={5}>
           Pins
         </Heading>
         <PinListView pins={pins} handlePinClick={handlePinClick} />
-        <VStack justifyContent="center" divider={<StackDivider borderColor="white" />}>
+        <VStack justifyContent="center" divider={<StackDivider borderColor="white" />} mb={2}>
           <Link href="/pinManagement">
             <Button colorScheme="blue">Manage Pins</Button>
           </Link>
@@ -54,7 +54,7 @@ const DashBoardView: React.FC = () => {
             Links
           </Heading>
           <LinkListView links={links} />
-          <Flex justifyContent="center">
+          <Flex justifyContent="center" mb={2}>
             <Link href={`/linkManagement/${encodeURIComponent(selectedPin._id)}`}>
               <Button colorScheme="blue">Manage Links</Button>
             </Link>
