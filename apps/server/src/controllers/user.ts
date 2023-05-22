@@ -45,8 +45,7 @@ export const userController: FastifyPluginAsyncTypebox = async (server) => {
           Type.Object({
             username: Type.String(),
             email: Type.String({ format: 'email' }),
-            password: Type.String(),
-            hash: Type.String()
+            password: Type.String()
           })
         ),
         response: {
@@ -58,18 +57,13 @@ export const userController: FastifyPluginAsyncTypebox = async (server) => {
     },
     async (req) => {
       const _id = req.user._id
-      if (req.body.password) {
-        const hash = await bcrypt.hash(req.body.password, 10)
-        req.body.hash = hash
-        delete req.body.password
+      const { password, ...$set } = req.body
+      if (password) {
+        Object.assign($set, {
+          hash: await bcrypt.hash(req.body.password, 10)
+        })
       }
-
-      await collections.users.updateOne(
-        { _id },
-        {
-          $set: req.body
-        }
-      )
+      await collections.users.updateOne({ _id }, { $set })
       return { _id }
     }
   )
