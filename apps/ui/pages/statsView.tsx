@@ -2,20 +2,24 @@ import {
   Flex,
   Avatar,
   Text,
+  Box,
   Wrap,
   WrapItem,
   Heading,
+  StackDivider,
   Center,
   Spacer,
-  Button
+  Button,
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Stack,
+  HStack,
+  VStack
 } from '@chakra-ui/react'
-import { Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
-import { Stack, HStack, VStack } from '@chakra-ui/react'
 import { useContext, useEffect, useState } from 'react'
 import { http } from '../utils/ky'
-import md5 from 'md5'
-import { useRouter } from 'next/router'
-import { AuthContext } from '../contexts/auth'
 
 function StatsView() {
   const [stats, setStats] = useState<any>({})
@@ -27,17 +31,35 @@ function StatsView() {
       .then((data) => setStats(data))
   }, [])
   return (
-    <VStack>
-      <Heading as="h1" size="xl" mx="10" my="10">
-        pin数量{stats.pins}
-      </Heading>
-      <Heading as="h1" size="xl" mx="10" my="10">
-        links数量{stats.links}
-      </Heading>
-      <Heading as="h1" size="xl" mx="10" my="10">
-        user数量{stats.users}
-      </Heading>
-    </VStack>
+    <Card>
+      <CardHeader>
+        <Heading as="h2" size="lg">
+          总览
+        </Heading>
+      </CardHeader>
+      <CardBody>
+        <Stack divider={<StackDivider />} spacing="4">
+          <Box>
+            <Heading as="h3" size="md">
+              Pin数量
+            </Heading>
+            <Text>{stats.pins}</Text>
+          </Box>
+          <Box>
+            <Heading as="h3" size="md">
+              Link数量
+            </Heading>
+            <Text>{stats.links}</Text>
+          </Box>
+          <Box>
+            <Heading as="h3" size="md">
+              用户数量
+            </Heading>
+            <Text>{stats.users}</Text>
+          </Box>
+        </Stack>
+      </CardBody>
+    </Card>
   )
 }
 
