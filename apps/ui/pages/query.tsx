@@ -17,6 +17,8 @@ import { AuthContext } from '../contexts/auth'
 import { http } from '../utils/ky'
 import type { Link } from '../components/types'
 
+type QueryParams = Partial<{ from: string; to: string }>
+
 const QueryView: React.FC = () => {
   const [fromIdQuery, setFromIdQuery] = useState('')
   const [toIdQuery, setToIdQuery] = useState('')
@@ -24,17 +26,20 @@ const QueryView: React.FC = () => {
   const [authToken] = useContext(AuthContext)
 
   const queryLink = async () => {
-    if (authToken && fromIdQuery && toIdQuery) {
-      const response = await http
-        .post('/api/query/getLinkOf', {
-          json: {
-            from: fromIdQuery,
-            to: toIdQuery
-          }
-        })
-        .json()
-      if (Array.isArray(response)) {
-        setLinks(response as Link[])
+    if (authToken) {
+      let query: QueryParams = {}
+      if (fromIdQuery) query.from = fromIdQuery
+      if (toIdQuery) query.to = toIdQuery
+
+      if (Object.keys(query).length > 0) {
+        const response = await http
+          .post('/api/query/getLinkOf', {
+            json: query
+          })
+          .json()
+        if (Array.isArray(response)) {
+          setLinks(response as Link[])
+        }
       }
     }
   }
