@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { Box, Button, Flex, Heading, Link } from '@chakra-ui/react'
+import { Box, Button, Flex, Heading, Link, VStack, StackDivider } from '@chakra-ui/react'
 import NextLink from 'next/link'
 import PinListView from '../components/PinListView'
 import LinkListView from '../components/LinkListView'
@@ -39,11 +39,14 @@ const DashBoardView: React.FC = () => {
           Pins
         </Heading>
         <PinListView pins={pins} handlePinClick={handlePinClick} />
-        <Flex justifyContent="center">
+        <VStack justifyContent="center" divider={<StackDivider borderColor="white" />}>
           <Link href="/pinManagement">
             <Button colorScheme="blue">Manage Pins</Button>
           </Link>
-        </Flex>
+          <Link href="/query">
+            <Button colorScheme="green">Query Links</Button>
+          </Link>
+        </VStack>
       </Box>
       {selectedPin && (
         <Box flex="0.7" backgroundColor="white" boxShadow="md">

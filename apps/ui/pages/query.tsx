@@ -39,10 +39,6 @@ const QueryView: React.FC = () => {
     }
   }
 
-  useEffect(() => {
-    queryLink()
-  }, [authToken, fromIdQuery, toIdQuery])
-
   return (
     <VStack spacing={4}>
       <Box margin={5}>
