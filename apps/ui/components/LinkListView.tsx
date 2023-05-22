@@ -1,12 +1,44 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Box, Grid, Text, Flex, Heading } from '@chakra-ui/react'
 import type { Link } from './types'
-
+import { http } from '../utils/ky'
 interface LinkListViewProps {
   links: Link[]
 }
+interface PinResponse {
+  _id: string
+  type: string
+  owner: string
+  metadata: {
+    title: string
+    description: string
+    doid: string
+    // Include other properties if needed
+  }
+}
 
 const LinkListView: React.FC<LinkListViewProps> = ({ links }) => {
+  const [titles, setTitles] = useState<{ [key: string]: string }>({})
+
+  const fetchPinTitle = async (id: string) => {
+    const response = await http.get(`/api/pin/${encodeURIComponent(id)}`).json<PinResponse>()
+    if (response && response.metadata) {
+      return response.metadata.title as string
+    }
+    return 'null' as string
+  }
+
+  useEffect(() => {
+    const fetchTitles = async () => {
+      const newTitles: { [key: string]: string } = {}
+      for (const link of links) {
+        newTitles[link.from] = await fetchPinTitle(link.from)
+      }
+      setTitles(newTitles)
+    }
+    fetchTitles()
+  }, [links])
+
   if (links.length === 0) {
     return (
       <Box py={5} px={10} overflowY="auto">
@@ -30,10 +62,10 @@ const LinkListView: React.FC<LinkListViewProps> = ({ links }) => {
           {links.map((link) => (
             <Box key={link._id} borderWidth={1} borderRadius="lg" p={4} height="160px">
               <Text mb={2} fontSize="sm">
-                From (ID): {link.from}
+                From: {titles[link.from] || 'Loading title...'} ({link.from})
               </Text>
               <Text mb={2} fontSize="sm">
-                To (ID): {link.to}
+                To: {titles[link.to] || 'Loading title...'} ({link.to})
               </Text>
               <Text fontSize="sm" fontWeight="bold">
                 {link.metadata.title as string}
