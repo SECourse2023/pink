@@ -62,10 +62,10 @@ const LinkListView: React.FC<LinkListViewProps> = ({ links }) => {
           {links.map((link) => (
             <Box key={link._id} borderWidth={1} borderRadius="lg" p={4} height="160px">
               <Text mb={2} fontSize="sm">
-                From: {titles[link.from] || 'Loading...'} ({link.from})
+                From: {titles[link.from] || 'Loading title...'} ({link.from})
               </Text>
               <Text mb={2} fontSize="sm">
-                To: {titles[link.to] || 'Loading...'} ({link.to})
+                To: {titles[link.to] || 'Loading title...'} ({link.to})
               </Text>
               <Text fontSize="sm" fontWeight="bold">
                 {link.metadata.title as string}
