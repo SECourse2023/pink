@@ -178,13 +178,19 @@ const PinManagementView: React.FC<PinListViewProps> = () => {
                         required: 'Pin Type is required'
                       })}
                     />
+                  </FormControl>
+                  <FormControl>
                     <FormLabel>Pin Metadata Title</FormLabel>
                     <Input placeholder="Pin Metadata Title" {...register('metadata.title')} />
+                  </FormControl>
+                  <FormControl>
                     <FormLabel>Pin Metadata Description</FormLabel>
                     <Input
                       placeholder="Pin Metadata Description"
                       {...register('metadata.description')}
                     />
+                  </FormControl>
+                  <FormControl>
                     <FormLabel>DOID</FormLabel>
                     <Input placeholder="Pin's DOID" {...register('metadata.doid')} />
                   </FormControl>
@@ -248,8 +254,12 @@ const PinManagementView: React.FC<PinListViewProps> = () => {
                       isReadOnly
                       style={{ backgroundColor: '#F4F4F4', cursor: 'not-allowed' }}
                     />
+                  </FormControl>
+                  <FormControl>
                     <FormLabel>Pin Metadata Title</FormLabel>
                     <Input placeholder="Pin Metadata Title" {...register('metadata.title')} />
+                  </FormControl>
+                  <FormControl>
                     <FormLabel>Pin Metadata Description</FormLabel>
                     <Input
                       placeholder="Pin Metadata Description"
