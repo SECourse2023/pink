@@ -36,8 +36,9 @@ const PinListView: React.FC<PinListViewProps> = ({ pins, handlePinClick }) => {
             cursor="pointer"
             onClick={() => handlePinClick(pin)}
           >
-            <Text fontSize="sm" fontWeight="bold">
-              {'' + pin.metadata.title}
+            <Text>
+              <b>{'' + pin.metadata.title}</b> <br />
+              <code className="text-sm">{'' + pin._id}</code>
             </Text>
             <Text fontSize="xs" color="gray.500">
               {'' + pin.metadata.description}

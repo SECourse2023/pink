@@ -65,12 +65,12 @@ const LinkListView: React.FC<LinkListViewProps> = ({ links }) => {
               <Text mb={2} fontSize="sm">
                 From: <b>{titles[link.from] || 'Loading title...'}</b>
                 <br />
-                {link.from}
+                <code>{link.from}</code>
               </Text>
               <Text mb={2} fontSize="sm">
                 To: <b>{titles[link.to] || 'Loading title...'}</b>
                 <br />
-                {link.to}
+                <code>{link.to}</code>
               </Text>
               <Text fontSize="sm" fontWeight="bold">
                 {link.metadata.title as string}
