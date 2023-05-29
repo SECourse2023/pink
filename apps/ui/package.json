@@ -14,11 +14,13 @@
     "@chakra-ui/react": "^2.5.5",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "chart.js": "^4.3.0",
     "framer-motion": "^10.12.2",
     "ky": "^0.33.3",
     "md5": "^2.3.0",
     "next": "latest",
     "react": "^18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.43.9"
   },
