@@ -1,4 +1,4 @@
-import { Flex, Heading, Link, Spacer } from '@chakra-ui/react'
+import { Flex, HStack, Heading, Link, Spacer } from '@chakra-ui/react'
 import NextLink from 'next/link'
 
 import UserIndicator from './userindicator'
@@ -18,7 +18,11 @@ export default function NavBar() {
         </Link>
       </div>
       <Spacer />
-      <UserIndicator />
+      <HStack>
+        <Link href="/query">关系查询</Link>
+        <Link href="/stats">数据统计</Link>
+        <UserIndicator />
+      </HStack>
     </Flex>
   )
 }

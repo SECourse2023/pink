@@ -8,8 +8,6 @@ export default function UserIndicator() {
 
   return (
     <HStack>
-      <Link href="/stats">数据统计</Link>
-      <Spacer />
       <Link as={NextLink} href={authToken ? `/profile` : `/login`}>
         {authToken ? '用户主页' : '登录'}
       </Link>

@@ -10,6 +10,7 @@ const DashBoardView: React.FC = () => {
   const [pins, setPins] = useState<any[]>([])
   const [selectedPin, setSelectedPin] = useState<any | null>(null)
   const [links, setLinks] = useState<any[]>([])
+  const [reverseLinks, setReverseLinks] = useState<any[]>([])
   const [authToken, setAuthToken] = useContext(AuthContext)
   useEffect(() => {
     if (authToken) {
@@ -22,6 +23,7 @@ const DashBoardView: React.FC = () => {
   const handlePinClick = (pin: any) => {
     setSelectedPin(pin)
     fetchLinks(pin) // 调用fetchLinks函数来获取links数据
+    fetchReverseLinks(pin)
   }
 
   const fetchLinks = (pin: any) => {
@@ -29,6 +31,14 @@ const DashBoardView: React.FC = () => {
       .get(`/api/link/list?from=${encodeURIComponent(pin._id)}`)
       .then((response) => response.json())
       .then((data) => setLinks(data as any))
+      .catch((error) => console.log(error))
+  }
+
+  const fetchReverseLinks = (pin: any) => {
+    http
+      .get(`/api/link/list?to=${encodeURIComponent(pin._id)}`)
+      .then((response) => response.json())
+      .then((data) => setReverseLinks(data as any))
       .catch((error) => console.log(error))
   }
 
@@ -53,7 +63,6 @@ const DashBoardView: React.FC = () => {
           <Heading as="h1" size="lg" textAlign="center" py={5}>
             Links
           </Heading>
-          <LinkListView links={links} />
           <Flex justifyContent="center" mb={5}>
             <Button
               as={NextLink}
@@ -63,6 +72,11 @@ const DashBoardView: React.FC = () => {
               Manage Links
             </Button>
           </Flex>
+          <LinkListView links={links} />
+          <Heading as="h1" size="lg" textAlign="center" py={5}>
+            Reverse Links
+          </Heading>
+          <LinkListView links={reverseLinks} />
         </Box>
       )}
     </Flex>

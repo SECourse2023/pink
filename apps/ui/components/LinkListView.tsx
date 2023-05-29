@@ -33,6 +33,7 @@ const LinkListView: React.FC<LinkListViewProps> = ({ links }) => {
       const newTitles: { [key: string]: string } = {}
       for (const link of links) {
         newTitles[link.from] = await fetchPinTitle(link.from)
+        newTitles[link.to] = await fetchPinTitle(link.to)
       }
       setTitles(newTitles)
     }
@@ -58,14 +59,18 @@ const LinkListView: React.FC<LinkListViewProps> = ({ links }) => {
   return (
     <Box py={5} px={10} overflowY="auto">
       <Flex direction="column" flexWrap="wrap" height="100%" width="100%">
-        <Grid templateColumns="repeat(2,1fr))" gap="1">
+        <Grid templateColumns="repeat(2,1fr)" gap="1">
           {links.map((link) => (
-            <Box key={link._id} borderWidth={1} borderRadius="lg" p={4} height="160px">
+            <Box key={link._id} borderWidth={1} borderRadius="lg" p={4} height="min-content">
               <Text mb={2} fontSize="sm">
-                From: {titles[link.from] || 'Loading title...'} ({link.from})
+                From: <b>{titles[link.from] || 'Loading title...'}</b>
+                <br />
+                {link.from}
               </Text>
               <Text mb={2} fontSize="sm">
-                To: {titles[link.to] || 'Loading title...'} ({link.to})
+                To: <b>{titles[link.to] || 'Loading title...'}</b>
+                <br />
+                {link.to}
               </Text>
               <Text fontSize="sm" fontWeight="bold">
                 {link.metadata.title as string}
