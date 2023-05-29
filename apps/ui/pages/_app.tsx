@@ -2,15 +2,11 @@ import { ChakraProvider } from '@chakra-ui/react'
 import type { AppProps } from 'next/app'
 import Layout from '../components/layout'
 import { AuthContextProvider } from '../contexts/auth'
-import Head from 'next/head'
+import Script from 'next/script'
 
 function App({ Component, pageProps }: AppProps) {
   return (
     <>
-      <Head>
-        <script src="https://cdn.jsdelivr.net/npm/@unocss/runtime" async></script>
-        <script src="https://cdn.jsdelivr.net/npm/@unocss/runtime/uno.global.js" async></script>
-      </Head>
       <AuthContextProvider>
         <ChakraProvider>
           <Layout>
@@ -18,6 +14,8 @@ function App({ Component, pageProps }: AppProps) {
           </Layout>
         </ChakraProvider>
       </AuthContextProvider>
+      <Script src="https://cdn.jsdelivr.net/npm/@unocss/runtime" async></Script>
+      <Script src="https://cdn.jsdelivr.net/npm/@unocss/runtime/uno.global.js" async></Script>
     </>
   )
 }
