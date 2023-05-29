@@ -28,13 +28,13 @@ function StatsView() {
   }, [])
   return (
     <VStack>
-      <Heading as="h1" size="xl" mx="10" my="10">
+      <Heading as="div" size="xl" mx="10" my="10">
         pin数量{stats.pins}
       </Heading>
-      <Heading as="h1" size="xl" mx="10" my="10">
+      <Heading as="div" size="xl" mx="10" my="10">
         links数量{stats.links}
       </Heading>
-      <Heading as="h1" size="xl" mx="10" my="10">
+      <Heading as="div" size="xl" mx="10" my="10">
         user数量{stats.users}
       </Heading>
     </VStack>

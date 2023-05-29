@@ -6,10 +6,10 @@ export default function Footer() {
       <Spacer />
       <Stack spacing={3} align="center">
         <Text fontSize="sm" color="gray">
-          这里应该写点什么东西
+          软工实验班2023春季学期 - 第一组课程项目
         </Text>
         <Text fontSize="sm" color="gray">
-          2023 © Pink Team
+          2023 © SECourse2023
         </Text>
       </Stack>
       <Spacer />
