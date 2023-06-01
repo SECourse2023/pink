@@ -12,7 +12,7 @@ interface PinResponse {
   metadata: {
     title: string
     description: string
-    doid: string
+    uri: string
     // Include other properties if needed
   }
 }

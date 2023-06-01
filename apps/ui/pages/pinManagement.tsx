@@ -37,7 +37,7 @@ type FormData = {
   metadata: {
     title: string
     description: string
-    doid: string
+    uri: string
   }
 }
 
@@ -191,8 +191,8 @@ const PinManagementView: React.FC<PinListViewProps> = () => {
                     />
                   </FormControl>
                   <FormControl>
-                    <FormLabel>DOID</FormLabel>
-                    <Input placeholder="Pin's DOID" {...register('metadata.doid')} />
+                    <FormLabel>URI</FormLabel>
+                    <Input placeholder="Pin's URI" {...register('metadata.uri')} />
                   </FormControl>
                 </ModalBody>
                 <ModalFooter>
@@ -222,7 +222,7 @@ const PinManagementView: React.FC<PinListViewProps> = () => {
                   <b>Description</b>: {'' + selectedPin.metadata.description}
                 </Text>
                 <Text>
-                  <b>DOID</b>: {'' + selectedPin.metadata.doid}
+                  <b>URI</b>: {'' + selectedPin.metadata.uri}
                 </Text>
               </ModalBody>
               <ModalFooter>
