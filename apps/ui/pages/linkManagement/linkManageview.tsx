@@ -38,7 +38,7 @@ interface PinResponse {
   metadata: {
     title: string
     description: string
-    uri: string
+    identifier: string
     // Include other properties if needed
   }
 }
