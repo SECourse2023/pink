@@ -117,6 +117,9 @@ export const pinController: FastifyPluginAsyncTypebox = async (server) => {
     },
     async (req) => {
       const _id = req.params.id
+      const link = await collections.links.findOne({ from: _id })
+      if (link) throw server.httpErrors.conflict('Pin is linked to a link')
+
       const pin = await collections.pins.findOne({ _id })
       if (pin.owner != req.user._id) throw server.httpErrors.forbidden()
       await collections.pins.deleteOne({ _id })
